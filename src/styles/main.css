@@ -1,14 +1,11 @@
 /* ==========================================================================
    2FA Live Code — High-Contrast Liquid Glass Design System
-   Sharp Neon Cyan (#00F0FF) & Electric Purple (#7000FF) with layered
-   optical translucency, Fresnel specular rims & Tailwind CSS v4
+   Semantic `.glass-*` & `.liquid-*` tokens + Tailwind CSS v4
    ========================================================================== */
 
 :root,
 [data-theme="dark"] {
   --bg-canvas: #050811;
-
-  /* Layered low-opacity tinted glass so sharp chromatic orbs refract cleanly */
   --glass-bg: linear-gradient(
     145deg,
     rgba(16, 24, 46, 0.46) 0%,
@@ -23,10 +20,9 @@
   --glass-inset-bg: rgba(3, 6, 15, 0.62);
   --glass-solid: rgba(11, 16, 30, 0.86);
   --glass-border: rgba(255, 255, 255, 0.16);
-  --clay-divider: rgba(255, 255, 255, 0.1);
-  --clay-chip-bg: rgba(0, 240, 255, 0.14);
+  --glass-divider: rgba(255, 255, 255, 0.1);
+  --glass-chip-bg: rgba(0, 240, 255, 0.14);
 
-  /* Crisp Fresnel rim + chromatic edge refraction */
   --glass-shadow:
     0 24px 64px rgba(0, 0, 0, 0.65),
     0 0 0 0.5px rgba(0, 240, 255, 0.12),
@@ -70,8 +66,8 @@
   --glass-inset-bg: rgba(255, 255, 255, 0.48);
   --glass-solid: rgba(250, 252, 255, 0.9);
   --glass-border: rgba(255, 255, 255, 0.8);
-  --clay-divider: rgba(15, 23, 42, 0.12);
-  --clay-chip-bg: rgba(2, 132, 199, 0.14);
+  --glass-divider: rgba(15, 23, 42, 0.12);
+  --glass-chip-bg: rgba(2, 132, 199, 0.14);
 
   --glass-shadow:
     0 22px 50px rgba(15, 23, 42, 0.12),
@@ -122,7 +118,7 @@ body {
   color: transparent;
 }
 
-/* Vivid High-Contrast Chromatic Liquid Orbs (Refracted through Translucent Glass) */
+/* Flowing Chromatic Liquid Orbs */
 .liquid-orb {
   position: absolute;
   border-radius: 44% 56% 52% 48% / 48% 42% 58% 52%;
@@ -181,9 +177,9 @@ body {
   100% { transform: translate(-70px, -40px) scale(1.02); }
 }
 
-/* Core High-Contrast Liquid Glass Surfaces */
-.clay-card,
-.clay-nav {
+/* Core Liquid Glass Surfaces */
+.glass-card,
+.glass-nav {
   position: relative;
   background: var(--glass-bg);
   backdrop-filter: blur(28px) saturate(210%) brightness(1.06);
@@ -194,7 +190,7 @@ body {
   will-change: transform;
 }
 
-.clay-subcard {
+.glass-subcard {
   position: relative;
   background: var(--glass-bg-sub);
   backdrop-filter: blur(20px) saturate(190%);
@@ -205,7 +201,7 @@ body {
   will-change: transform;
 }
 
-.clay-inset {
+.glass-inset {
   background: var(--glass-inset-bg);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
@@ -213,14 +209,14 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.11);
 }
 
-.clay-input {
+.glass-input {
   background: var(--glass-inset-bg);
   color: var(--text-primary);
   box-shadow: var(--glass-inset-shadow);
   border: 1px solid rgba(255, 255, 255, 0.13);
 }
 
-.clay-input:focus,
+.glass-input:focus,
 .secret-textarea:focus {
   border-color: rgba(0, 240, 255, 0.7);
   box-shadow:
@@ -229,8 +225,8 @@ body {
     0 0 26px rgba(0, 240, 255, 0.16);
 }
 
-/* Translucent Liquid Glass Buttons */
-.clay-btn {
+/* Liquid Glass Buttons */
+.glass-btn {
   position: relative;
   background: var(--glass-bg-sub);
   backdrop-filter: blur(18px) saturate(190%);
@@ -242,7 +238,7 @@ body {
   will-change: transform;
 }
 
-.clay-btn:hover:not(:disabled) {
+.glass-btn:hover:not(:disabled) {
   color: var(--accent-primary);
   background: rgba(0, 240, 255, 0.08);
   border-color: rgba(0, 240, 255, 0.55);
@@ -251,7 +247,7 @@ body {
     inset 0 1.5px 1.5px rgba(255, 255, 255, 0.5);
 }
 
-.clay-btn-primary {
+.glass-btn-primary {
   position: relative;
   background: linear-gradient(120deg, rgba(0, 240, 255, 0.84) 0%, rgba(112, 0, 255, 0.92) 100%);
   backdrop-filter: blur(16px) saturate(210%);
@@ -266,7 +262,7 @@ body {
   will-change: transform;
 }
 
-.clay-btn-primary:hover:not(:disabled) {
+.glass-btn-primary:hover:not(:disabled) {
   filter: brightness(1.08);
   box-shadow:
     0 18px 40px rgba(0, 240, 255, 0.46),
@@ -275,23 +271,23 @@ body {
     inset 0 -3px 8px rgba(30, 0, 100, 0.48);
 }
 
-.clay-btn-primary:disabled {
+.glass-btn-primary:disabled {
   opacity: 0.42;
   cursor: not-allowed;
 }
 
-.clay-chip {
-  background: var(--clay-chip-bg);
+.glass-chip {
+  background: var(--glass-chip-bg);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(0, 240, 255, 0.38);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.32);
   transition: filter 0.15s ease;
 }
 
-.clay-chip:hover { filter: brightness(1.18); }
+.glass-chip:hover { filter: brightness(1.18); }
 
-/* High-Contrast Translucent Icon Badges */
-.clay-badge-primary {
+/* Refractive Icon Badges */
+.glass-badge-primary {
   background: linear-gradient(135deg, rgba(0, 240, 255, 0.88), rgba(112, 0, 255, 0.92));
   border: 1px solid rgba(255, 255, 255, 0.48);
   box-shadow:
@@ -300,40 +296,34 @@ body {
     inset 0 -3px 6px rgba(40, 0, 115, 0.48);
 }
 
-.clay-badge-sky,
-.clay-badge-amber {
+.glass-badge-sky,
+.glass-badge-amber {
   background: linear-gradient(145deg, rgba(0, 240, 255, 0.22), rgba(0, 240, 255, 0.05));
   color: var(--accent-primary);
   border: 1px solid rgba(0, 240, 255, 0.38);
-  box-shadow:
-    0 8px 20px rgba(0, 240, 255, 0.16),
-    inset 0 1.5px 2px rgba(255, 255, 255, 0.42);
+  box-shadow: 0 8px 20px rgba(0, 240, 255, 0.16), inset 0 1.5px 2px rgba(255, 255, 255, 0.42);
 }
 
-.clay-badge-violet {
+.glass-badge-violet {
   background: linear-gradient(145deg, rgba(112, 0, 255, 0.34), rgba(112, 0, 255, 0.08));
   color: #C4B5FD;
   border: 1px solid rgba(167, 139, 250, 0.42);
-  box-shadow:
-    0 8px 20px rgba(112, 0, 255, 0.22),
-    inset 0 1.5px 2px rgba(255, 255, 255, 0.38);
+  box-shadow: 0 8px 20px rgba(112, 0, 255, 0.22), inset 0 1.5px 2px rgba(255, 255, 255, 0.38);
 }
 
-[data-theme="light"] .clay-badge-violet { color: #6D28D9; }
+[data-theme="light"] .glass-badge-violet { color: #6D28D9; }
 
-.clay-badge-emerald {
+.glass-badge-emerald {
   background: linear-gradient(145deg, rgba(16, 185, 129, 0.26), rgba(16, 185, 129, 0.06));
   color: #34D399;
   border: 1px solid rgba(52, 211, 153, 0.4);
-  box-shadow:
-    0 8px 20px rgba(16, 185, 129, 0.18),
-    inset 0 1.5px 2px rgba(255, 255, 255, 0.38);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.18), inset 0 1.5px 2px rgba(255, 255, 255, 0.38);
 }
 
-[data-theme="light"] .clay-badge-emerald { color: #047857; }
+[data-theme="light"] .glass-badge-emerald { color: #047857; }
 
 /* Status & Countdown Pills */
-.clay-pill-emerald {
+.glass-pill-emerald {
   background: rgba(16, 185, 129, 0.14);
   backdrop-filter: blur(12px);
   color: #34D399;
@@ -341,9 +331,9 @@ body {
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.28);
 }
 
-[data-theme="light"] .clay-pill-emerald { color: #047857; }
+[data-theme="light"] .glass-pill-emerald { color: #047857; }
 
-.clay-pill-accent {
+.glass-pill-accent {
   background: rgba(0, 240, 255, 0.12);
   backdrop-filter: blur(12px);
   color: var(--accent-primary);
@@ -358,7 +348,7 @@ body {
   border-color: rgba(255, 46, 91, 0.55);
 }
 
-/* Flowing Translucent Liquid Glass Tab Pill */
+/* Flowing Liquid Glass Tab Pill */
 .tab-liquid-pill {
   position: absolute;
   top: 14px;
@@ -386,39 +376,35 @@ body {
   transition: color 0.2s ease;
 }
 
-.tab-btn:hover { color: var(--text-primary); }
+.tab-btn:hover,
 .tab-btn.active { color: var(--text-primary); }
 
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 
 /* Notice Box */
-.clay-notice {
+.glass-notice {
   background: linear-gradient(135deg, rgba(0, 240, 255, 0.08), rgba(112, 0, 255, 0.06));
   backdrop-filter: blur(16px);
   border: 1px solid rgba(0, 240, 255, 0.24);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.24);
 }
 
-/* High-Contrast Translucent Liquid Glass Countdown Bead */
-.clay-liquid-dot {
+/* Liquid Glass Countdown Bead & Optical Channel */
+.liquid-dot {
   position: relative;
   width: 9px;
   height: 9px;
   border-radius: 50%;
   background: radial-gradient(circle at 32% 28%, #FFFFFF 0%, #00F0FF 46%, #7000FF 100%);
-  box-shadow:
-    0 0 12px rgba(0, 240, 255, 0.78),
-    inset 1px 1px 2px rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.78), inset 1px 1px 2px rgba(255, 255, 255, 0.92);
   animation: naturalGlassPulse 3s ease-in-out infinite;
   flex-shrink: 0;
 }
 
-.countdown-pill.expiring .clay-liquid-dot {
+.countdown-pill.expiring .liquid-dot {
   background: radial-gradient(circle at 32% 28%, #FFF1F2 0%, #FF4D79 46%, #E11D48 100%);
-  box-shadow:
-    0 0 14px rgba(255, 46, 91, 0.85),
-    inset 1px 1px 2px rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 14px rgba(255, 46, 91, 0.85), inset 1px 1px 2px rgba(255, 255, 255, 0.92);
   animation-duration: 1.2s;
 }
 
@@ -427,22 +413,19 @@ body {
   50% { transform: scale(1.12); opacity: 1; }
 }
 
-/* Translucent Liquid Glass Countdown Channel & Merging Stream */
-.clay-liquid-track {
+.liquid-track {
   background: rgba(3, 6, 15, 0.56);
   backdrop-filter: blur(14px);
-  box-shadow:
-    inset 0 4px 12px rgba(0, 0, 0, 0.7),
-    inset 0 -1px 1px rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.7), inset 0 -1px 1px rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
-[data-theme="light"] .clay-liquid-track {
+[data-theme="light"] .liquid-track {
   background: rgba(255, 255, 255, 0.45);
   box-shadow: var(--glass-inset-shadow);
 }
 
-.clay-track-ticks {
+.liquid-track-ticks {
   position: absolute;
   inset: 4px 10px;
   pointer-events: none;
@@ -463,7 +446,7 @@ body {
   filter: url(#liquid-goo);
 }
 
-.clay-liquid-fill {
+.liquid-fill {
   position: relative;
   height: 100%;
   min-width: 12px;
@@ -478,7 +461,7 @@ body {
   will-change: width;
 }
 
-.clay-liquid-wave {
+.liquid-wave {
   position: absolute;
   inset: -60% -100% -60% -100%;
   background: radial-gradient(
@@ -491,12 +474,12 @@ body {
   pointer-events: none;
 }
 
-.clay-liquid-wave.wave-2 {
+.liquid-wave.wave-2 {
   opacity: 0.62;
   animation: liquidDrift 7.8s linear infinite reverse;
 }
 
-.clay-liquid-sheen {
+.liquid-sheen {
   position: absolute;
   top: 1.5px;
   left: 6px;
@@ -507,7 +490,7 @@ body {
   pointer-events: none;
 }
 
-.led-bar.expiring .clay-liquid-fill {
+.led-bar.expiring .liquid-fill {
   background: linear-gradient(90deg, rgba(190, 18, 60, 0.88) 0%, rgba(255, 46, 91, 0.94) 55%, rgba(255, 110, 145, 0.96) 100%);
   box-shadow:
     0 0 22px rgba(255, 46, 91, 0.65),
@@ -611,9 +594,9 @@ body {
 .bulk-card-code { font-size: 1.6rem; font-weight: 700; letter-spacing: 0.08em; color: var(--accent-primary); }
 .bulk-card-mask { font-size: 0.7rem; color: var(--text-muted); }
 
-/* Sharp Chromatic Caustic Light Refraction following Cursor */
-.clay-card::before,
-.clay-subcard::before,
+/* Chromatic Caustic Light Refraction following Cursor */
+.glass-card::before,
+.glass-subcard::before,
 .bulk-card::before {
   content: '';
   position: absolute;
@@ -621,34 +604,31 @@ body {
   border-radius: inherit;
   pointer-events: none;
   opacity: 0;
-  background:
-    radial-gradient(
-      360px circle at var(--mx, 50%) var(--my, 50%),
-      rgba(255, 255, 255, 0.16),
-      rgba(0, 240, 255, 0.16) 28%,
-      rgba(112, 0, 255, 0.11) 56%,
-      transparent 78%
-    );
+  background: radial-gradient(
+    360px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 255, 255, 0.16),
+    rgba(0, 240, 255, 0.16) 28%,
+    rgba(112, 0, 255, 0.11) 56%,
+    transparent 78%
+  );
   transition: opacity 0.28s ease;
   z-index: 0;
 }
 
-.clay-card:hover::before,
-.clay-subcard:hover::before,
+.glass-card:hover::before,
+.glass-subcard:hover::before,
 .bulk-card:hover::before { opacity: 1; }
 
-.clay-card > *,
-.clay-subcard > *,
+.glass-card > *,
+.glass-subcard > *,
 .bulk-card > * {
   position: relative;
   z-index: 1;
 }
 
 /* QR Stage */
-.clay-qr-frame {
-  box-shadow:
-    0 18px 38px rgba(0, 0, 0, 0.48),
-    0 0 0 1px rgba(255, 255, 255, 0.55);
+.glass-qr-frame {
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(255, 255, 255, 0.55);
 }
 
 .qr-stage svg { width: 100%; height: 100%; display: block; }
@@ -695,7 +675,7 @@ body {
   50% { top: 90%; }
 }
 
-/* High-Contrast Translucent Liquid Glass Toast */
+/* Liquid Glass Toast */
 .toast {
   padding: 12px 18px;
   border-radius: 999px;

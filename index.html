@@ -11,10 +11,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./src/styles/main.css" />
 </head>
 <body class="min-h-screen overflow-x-hidden antialiased selection:bg-cyan-400/25 selection:text-cyan-200">
-  <!-- SVG Optical Refraction & Liquid Merge Filters -->
+  <!-- SVG Optical Liquid Merge Filter -->
   <svg class="sr-only" aria-hidden="true" focusable="false">
     <defs>
       <filter id="liquid-goo">
@@ -25,18 +25,18 @@
     </defs>
   </svg>
 
-  <!-- Flowing Chromatic Liquid Orbs (Refracted through Liquid Glass) -->
+  <!-- Flowing Chromatic Liquid Orbs -->
   <div class="bg-ambient fixed inset-0 -z-20 pointer-events-none overflow-hidden" aria-hidden="true">
     <span class="liquid-orb orb-1"></span>
     <span class="liquid-orb orb-2"></span>
     <span class="liquid-orb orb-3"></span>
   </div>
 
-  <!-- Sticky Clay Header -->
+  <!-- Sticky Liquid Glass Header -->
   <header class="site-header sticky top-0 z-40 px-4 pt-3 pb-2">
-    <div class="max-w-5xl mx-auto clay-nav rounded-[24px] px-4 sm:px-6 h-16 sm:h-[70px] flex items-center justify-between gap-4">
+    <div class="max-w-5xl mx-auto glass-nav rounded-[24px] px-4 sm:px-6 h-16 sm:h-[70px] flex items-center justify-between gap-4">
       <a href="#" class="brand inline-flex items-center gap-3 no-underline font-extrabold text-lg tracking-tight" aria-label="2FA Live Code Home">
-        <span class="clay-badge-primary w-10 h-10 rounded-[14px] grid place-items-center text-white shrink-0" aria-hidden="true">
+        <span class="glass-badge-primary w-10 h-10 rounded-[14px] grid place-items-center text-white shrink-0" aria-hidden="true">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4" />
             <path d="M14 13.12c0 2.38 0 6.38-1 8.88" />
@@ -60,11 +60,11 @@
       </nav>
 
       <div class="header-actions flex items-center gap-2.5">
-        <span class="status-pill clay-pill-emerald inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold" id="offlineStatus" title="All TOTP cryptographic calculations run 100% locally in your browser">
+        <span class="status-pill glass-pill-emerald inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold" id="offlineStatus" title="All TOTP cryptographic calculations run 100% locally in your browser">
           <span class="w-2 h-2 rounded-full bg-current shadow-[0_0_8px_currentColor]"></span>
           <span class="status-label hidden sm:inline">100% Local</span>
         </span>
-        <button type="button" class="icon-btn clay-btn w-10 h-10 rounded-[14px] grid place-items-center cursor-pointer" id="themeToggle" aria-label="Toggle Light/Dark Theme" title="Toggle Clay Theme">
+        <button type="button" class="icon-btn glass-btn w-10 h-10 rounded-[14px] grid place-items-center cursor-pointer" id="themeToggle" aria-label="Toggle Light/Dark Theme" title="Toggle Theme">
           <svg class="icon-sun w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
           <svg class="icon-moon w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         </button>
@@ -73,9 +73,9 @@
   </header>
 
   <main class="max-w-5xl mx-auto px-4 sm:px-6 pt-5 pb-16 flex flex-col gap-10">
-    <!-- Main Interactive 2FA Tool Card (Claymorphism) -->
-    <section class="glass-card clay-card tool-card rounded-[32px]" aria-label="2FA Live Code Generator">
-      <!-- Mode Switcher Bar (Flowing Liquid Glass Pill) -->
+    <!-- Main Interactive 2FA Tool Card -->
+    <section class="glass-card tool-card rounded-[32px]" aria-label="2FA Live Code Generator">
+      <!-- Mode Switcher Bar -->
       <div class="tool-tabs relative flex gap-2 p-3.5 sm:px-6 border-b border-[var(--glass-border)] overflow-x-auto" role="tablist" aria-label="Generator Modes">
         <span class="tab-liquid-pill" id="tabLiquidPill" aria-hidden="true"></span>
         <button type="button" class="tab-btn active relative z-10 inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-bold whitespace-nowrap cursor-pointer" role="tab" aria-selected="true" data-tab="single">
@@ -99,13 +99,13 @@
           <div class="tool-col flex flex-col gap-4">
             <div class="flex items-center justify-between gap-3">
               <label for="secretInput" class="text-xs font-extrabold tracking-widest uppercase text-[var(--accent-primary)]">AUTHENTICATION SECRET KEY</label>
-              <button type="button" class="clay-chip px-3 py-1 rounded-full text-xs font-bold text-[var(--accent-primary)] cursor-pointer" id="tryDemoBtn" title="Fill with a sample RFC 6238 secret key">Try Demo</button>
+              <button type="button" class="glass-chip px-3 py-1 rounded-full text-xs font-bold text-[var(--accent-primary)] cursor-pointer" id="tryDemoBtn" title="Fill with a sample RFC 6238 secret key">Try Demo</button>
             </div>
 
             <div class="relative">
               <textarea
                 id="secretInput"
-                class="secret-textarea clay-inset mono w-full min-h-[118px] resize-y rounded-[20px] px-4 py-3.5 pr-11 text-[0.96rem] leading-relaxed outline-none"
+                class="secret-textarea glass-inset mono w-full min-h-[118px] resize-y rounded-[20px] px-4 py-3.5 pr-11 text-[0.96rem] leading-relaxed outline-none"
                 rows="4"
                 spellcheck="false"
                 autocomplete="off"
@@ -113,7 +113,7 @@
                 placeholder="e.g. JBSW Y3DP EHPK 3PXP&#10;or paste otpauth://totp/... URI"
                 aria-label="Authentication Secret Key"
               ></textarea>
-              <button type="button" class="clear-input-btn hidden absolute top-3 right-3 w-7 h-7 rounded-[10px] clay-btn grid place-items-center cursor-pointer" id="clearInputBtn" aria-label="Clear Secret Key" title="Clear Secret Key">
+              <button type="button" class="clear-input-btn hidden absolute top-3 right-3 w-7 h-7 rounded-[10px] glass-btn grid place-items-center cursor-pointer" id="clearInputBtn" aria-label="Clear Secret Key" title="Clear Secret Key">
                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg>
               </button>
             </div>
@@ -122,17 +122,17 @@
 
             <!-- Action Buttons Row -->
             <div class="flex flex-wrap gap-2.5">
-              <button type="button" class="btn btn-secondary clay-btn flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-[16px] text-sm font-bold cursor-pointer" id="pasteBtn">
+              <button type="button" class="btn btn-secondary glass-btn flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-[16px] text-sm font-bold cursor-pointer" id="pasteBtn">
                 <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
                 <span>Paste Key</span>
               </button>
 
               <div class="flex flex-1 gap-2">
-                <button type="button" class="btn btn-secondary clay-btn flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-[16px] text-sm font-bold cursor-pointer" id="scanQrBtn">
+                <button type="button" class="btn btn-secondary glass-btn flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-[16px] text-sm font-bold cursor-pointer" id="scanQrBtn">
                   <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 7V5a2 2 0 0 1 2-2h2m10 0h2a2 2 0 0 1 2 2v2m0 10v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1.5"/></svg>
                   <span>Scan QR</span>
                 </button>
-                <button type="button" class="btn btn-secondary clay-btn px-3.5 py-3 rounded-[16px] grid place-items-center cursor-pointer" id="uploadQrBtn" title="Upload QR Image" aria-label="Upload QR Image">
+                <button type="button" class="btn btn-secondary glass-btn px-3.5 py-3 rounded-[16px] grid place-items-center cursor-pointer" id="uploadQrBtn" title="Upload QR Image" aria-label="Upload QR Image">
                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                 </button>
                 <input type="file" id="qrFileInput" accept="image/*" class="sr-only" />
@@ -140,7 +140,7 @@
             </div>
 
             <!-- Collapsible Advanced Options -->
-            <div class="clay-inset rounded-[20px] overflow-hidden">
+            <div class="glass-inset rounded-[20px] overflow-hidden">
               <button type="button" class="w-full flex items-center justify-between px-4 py-3 text-xs font-bold cursor-pointer bg-transparent border-0 text-[var(--text-secondary)]" id="advancedToggle" aria-expanded="false">
                 <span class="inline-flex items-center gap-2">
                   <svg class="w-4 h-4 text-[var(--accent-primary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
@@ -149,22 +149,22 @@
                 <span class="mono text-[11px] opacity-75" id="paramSummary">6d • 30s • SHA-1</span>
               </button>
 
-              <div class="hidden px-4 pb-4 pt-2 border-t border-[var(--clay-divider)] flex flex-col gap-3" id="advancedDrawer">
+              <div class="hidden px-4 pb-4 pt-2 border-t border-[var(--glass-divider)] flex flex-col gap-3" id="advancedDrawer">
                 <label class="flex flex-col gap-1.5 text-xs font-bold text-[var(--text-secondary)]">
                   <span>Label (optional)</span>
-                  <input type="text" id="accountLabelInput" class="clay-input rounded-[12px] px-3 py-2 text-sm outline-none" placeholder="e.g. GitHub, Binance" maxlength="40" />
+                  <input type="text" id="accountLabelInput" class="glass-input rounded-[12px] px-3 py-2 text-sm outline-none" placeholder="e.g. GitHub, Binance" maxlength="40" />
                 </label>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   <label class="flex flex-col gap-1.5 text-xs font-bold text-[var(--text-secondary)]">
                     <span>Digits</span>
-                    <select id="digitsSelect" class="clay-input mono rounded-[12px] px-2.5 py-2 text-xs font-bold outline-none">
+                    <select id="digitsSelect" class="glass-input mono rounded-[12px] px-2.5 py-2 text-xs font-bold outline-none">
                       <option value="6" selected>6 Digits</option>
                       <option value="8">8 Digits</option>
                     </select>
                   </label>
                   <label class="flex flex-col gap-1.5 text-xs font-bold text-[var(--text-secondary)]">
                     <span>Period</span>
-                    <select id="periodSelect" class="clay-input mono rounded-[12px] px-2.5 py-2 text-xs font-bold outline-none">
+                    <select id="periodSelect" class="glass-input mono rounded-[12px] px-2.5 py-2 text-xs font-bold outline-none">
                       <option value="30" selected>30 sec</option>
                       <option value="60">60 sec</option>
                       <option value="15">15 sec</option>
@@ -172,7 +172,7 @@
                   </label>
                   <label class="flex flex-col gap-1.5 text-xs font-bold text-[var(--text-secondary)]">
                     <span>Algorithm</span>
-                    <select id="algoSelect" class="clay-input mono rounded-[12px] px-2.5 py-2 text-xs font-bold outline-none">
+                    <select id="algoSelect" class="glass-input mono rounded-[12px] px-2.5 py-2 text-xs font-bold outline-none">
                       <option value="SHA-1" selected>SHA-1</option>
                       <option value="SHA-256">SHA-256</option>
                       <option value="SHA-512">SHA-512</option>
@@ -183,8 +183,8 @@
             </div>
 
             <!-- Zero-Knowledge Privacy Notice -->
-            <div class="clay-notice flex items-start gap-3 p-3.5 rounded-[18px] text-xs leading-relaxed text-[var(--text-secondary)]">
-              <span class="clay-badge-sky w-8 h-8 rounded-[11px] grid place-items-center shrink-0">
+            <div class="glass-notice flex items-start gap-3 p-3.5 rounded-[18px] text-xs leading-relaxed text-[var(--text-secondary)]">
+              <span class="glass-badge-sky w-8 h-8 rounded-[11px] grid place-items-center shrink-0">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
               </span>
               <p>Your keys are processed <strong class="text-[var(--text-primary)]">100% locally</strong> via Web Crypto API. Zero server requests, zero ads, zero tracking. Disconnect to verify.</p>
@@ -198,21 +198,21 @@
                 <svg class="w-4 h-4 text-[var(--accent-primary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                 <span>ACTIVE TOKEN</span>
               </span>
-              <span class="countdown-pill clay-pill-accent mono inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold" id="countdownPill" aria-live="off">
-                <span class="clay-liquid-dot" aria-hidden="true"></span>
+              <span class="countdown-pill glass-pill-accent mono inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold" id="countdownPill" aria-live="off">
+                <span class="liquid-dot" aria-hidden="true"></span>
                 <span id="countdownText">30s</span>
               </span>
             </div>
 
             <!-- Liquid Glass Merging Countdown Channel -->
             <div class="flex flex-col gap-2">
-              <div class="led-bar clay-liquid-track relative h-5 p-[4px] rounded-full overflow-hidden" id="ledBar" aria-hidden="true">
-                <div class="clay-track-ticks" aria-hidden="true"></div>
+              <div class="led-bar liquid-track relative h-5 p-[4px] rounded-full overflow-hidden" id="ledBar" aria-hidden="true">
+                <div class="liquid-track-ticks" aria-hidden="true"></div>
                 <div class="liquid-goo-layer">
-                  <div class="clay-liquid-fill" id="liquidFill" style="width: 100%;">
-                    <span class="clay-liquid-wave"></span>
-                    <span class="clay-liquid-wave wave-2"></span>
-                    <span class="clay-liquid-sheen"></span>
+                  <div class="liquid-fill" id="liquidFill" style="width: 100%;">
+                    <span class="liquid-wave"></span>
+                    <span class="liquid-wave wave-2"></span>
+                    <span class="liquid-sheen"></span>
                   </div>
                 </div>
               </div>
@@ -223,14 +223,14 @@
               </div>
             </div>
 
-            <!-- Sculpted Clay Token Display Well -->
-            <button type="button" class="token-display-box clay-inset w-full py-7 px-5 rounded-[24px] flex flex-col items-center justify-center gap-1.5 cursor-pointer border-0" id="tokenDisplayBox" title="Click to copy code" aria-label="Active 2FA Token. Click to copy">
+            <!-- Token Display Well -->
+            <button type="button" class="token-display-box glass-inset w-full py-7 px-5 rounded-[24px] flex flex-col items-center justify-center gap-1.5 cursor-pointer border-0" id="tokenDisplayBox" title="Click to copy code" aria-label="Active 2FA Token. Click to copy">
               <span class="token-value mono font-bold tracking-[0.12em] leading-none" id="tokenValue">--- ---</span>
               <span class="token-next mono text-xs font-semibold text-[var(--text-muted)] min-h-[16px]" id="nextTokenPreview" title="Upcoming code in next cycle"></span>
             </button>
 
-            <!-- Primary Clay CTA -->
-            <button type="button" class="btn btn-primary clay-btn-primary w-full py-3.5 px-5 rounded-[18px] inline-flex items-center justify-center gap-2.5 text-base font-extrabold text-white cursor-pointer border-0" id="copyCodeBtn" disabled>
+            <!-- Primary CTA -->
+            <button type="button" class="btn btn-primary glass-btn-primary w-full py-3.5 px-5 rounded-[18px] inline-flex items-center justify-center gap-2.5 text-base font-extrabold text-white cursor-pointer border-0" id="copyCodeBtn" disabled>
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
               <span id="copyBtnLabel">Copy Code</span>
               <kbd class="hidden sm:inline-block mono text-[11px] px-2 py-0.5 rounded-lg bg-white/20 text-white font-semibold">Ctrl+C</kbd>
@@ -240,10 +240,10 @@
             <div class="flex flex-col gap-2 pt-1">
               <div class="flex items-center justify-between">
                 <span class="text-[11px] font-extrabold tracking-widest uppercase text-[var(--text-secondary)]">RECENT KEYS (LOCAL CACHE)</span>
-                <button type="button" class="hidden text-xs font-bold text-rose-500 hover:underline bg-transparent border-0 cursor-pointer" id="clearRecentBtn">Clear</button>
+                <button type="button" class="hidden text-xs font-bold text-rose-400 hover:underline bg-transparent border-0 cursor-pointer" id="clearRecentBtn">Clear</button>
               </div>
               <div class="recent-list flex flex-col gap-2 max-h-[200px] overflow-y-auto pr-1" id="recentList">
-                <div class="recent-empty clay-inset rounded-[16px] p-3.5 text-center text-xs text-[var(--text-muted)]">No recent keys yet. Paste a secret key or click <strong>Try Demo</strong>.</div>
+                <div class="recent-empty glass-inset rounded-[16px] p-3.5 text-center text-xs text-[var(--text-muted)]">No recent keys yet. Paste a secret key or click <strong>Try Demo</strong>.</div>
               </div>
             </div>
           </div>
@@ -256,28 +256,28 @@
           <div class="flex flex-col gap-2.5">
             <div class="flex items-center justify-between">
               <label for="bulkInput" class="text-xs font-extrabold tracking-widest uppercase text-[var(--accent-primary)]">BULK SECRET KEYS (ONE PER LINE)</label>
-              <button type="button" class="clay-chip px-3 py-1 rounded-full text-xs font-bold text-[var(--accent-primary)] cursor-pointer" id="bulkDemoBtn">Load Sample List</button>
+              <button type="button" class="glass-chip px-3 py-1 rounded-full text-xs font-bold text-[var(--accent-primary)] cursor-pointer" id="bulkDemoBtn">Load Sample List</button>
             </div>
             <textarea
               id="bulkInput"
-              class="secret-textarea clay-inset mono w-full min-h-[126px] resize-y rounded-[20px] px-4 py-3.5 text-sm outline-none"
+              class="secret-textarea glass-inset mono w-full min-h-[126px] resize-y rounded-[20px] px-4 py-3.5 text-sm outline-none"
               rows="5"
               spellcheck="false"
               placeholder="GitHub: JBSWY3DPEHPK3PXP&#10;Binance: HXDMVJECJJWSRB3H&#10;Discord: GEZDGNBVGY3TQOJQ"
             ></textarea>
-            <p class="text-xs text-[var(--text-muted)]">Format: <code class="mono px-1.5 py-0.5 rounded-md bg-[var(--clay-chip-bg)]">Label: SECRET_KEY</code>, raw <code class="mono px-1.5 py-0.5 rounded-md bg-[var(--clay-chip-bg)]">SECRET_KEY</code>, or <code class="mono px-1.5 py-0.5 rounded-md bg-[var(--clay-chip-bg)]">otpauth://</code> URI — one per line.</p>
+            <p class="text-xs text-[var(--text-muted)]">Format: <code class="mono px-1.5 py-0.5 rounded-md bg-[var(--glass-chip-bg)]">Label: SECRET_KEY</code>, raw <code class="mono px-1.5 py-0.5 rounded-md bg-[var(--glass-chip-bg)]">SECRET_KEY</code>, or <code class="mono px-1.5 py-0.5 rounded-md bg-[var(--glass-chip-bg)]">otpauth://</code> URI — one per line.</p>
           </div>
 
-          <div class="flex items-center justify-between pt-3 border-t border-[var(--clay-divider)]">
+          <div class="flex items-center justify-between pt-3 border-t border-[var(--glass-divider)]">
             <span class="text-xs font-extrabold tracking-widest uppercase text-[var(--text-secondary)]">LIVE MULTI-TOKEN BOARD (<span id="bulkCount">0</span>)</span>
-            <span class="countdown-pill clay-pill-accent mono inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold" id="bulkCountdownPill">
-              <span class="clay-liquid-dot" aria-hidden="true"></span>
+            <span class="countdown-pill glass-pill-accent mono inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold" id="bulkCountdownPill">
+              <span class="liquid-dot" aria-hidden="true"></span>
               <span id="bulkCountdownText">30s</span>
             </span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5" id="bulkGrid">
-            <div class="col-span-full clay-inset rounded-[18px] p-5 text-center text-xs text-[var(--text-muted)]">Enter one or more secret keys above to monitor all live 2FA codes simultaneously.</div>
+            <div class="col-span-full glass-inset rounded-[18px] p-5 text-center text-xs text-[var(--text-muted)]">Enter one or more secret keys above to monitor all live 2FA codes simultaneously.</div>
           </div>
         </div>
       </div>
@@ -288,35 +288,35 @@
           <div class="md:col-span-7 flex flex-col gap-4">
             <div class="flex items-center justify-between">
               <span class="text-xs font-extrabold tracking-widest uppercase text-[var(--accent-primary)]">GENERATE OTPAUTH QR CODE</span>
-              <button type="button" class="clay-chip px-3 py-1 rounded-full text-xs font-bold text-[var(--accent-primary)] cursor-pointer" id="genRandomSecretBtn">Random Secret</button>
+              <button type="button" class="glass-chip px-3 py-1 rounded-full text-xs font-bold text-[var(--accent-primary)] cursor-pointer" id="genRandomSecretBtn">Random Secret</button>
             </div>
 
             <label class="flex flex-col gap-1.5 text-xs font-bold text-[var(--text-secondary)]">
               <span>Secret Key (Base32)</span>
-              <input type="text" id="qrSecretInput" class="clay-input mono rounded-[14px] px-3.5 py-2.5 text-sm outline-none" placeholder="JBSWY3DPEHPK3PXP" autocomplete="off" />
+              <input type="text" id="qrSecretInput" class="glass-input mono rounded-[14px] px-3.5 py-2.5 text-sm outline-none" placeholder="JBSWY3DPEHPK3PXP" autocomplete="off" />
             </label>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <label class="flex flex-col gap-1.5 text-xs font-bold text-[var(--text-secondary)]">
                 <span>Issuer / Service</span>
-                <input type="text" id="qrIssuerInput" class="clay-input rounded-[14px] px-3.5 py-2.5 text-sm outline-none" placeholder="e.g. GitHub" value="2FA Live" />
+                <input type="text" id="qrIssuerInput" class="glass-input rounded-[14px] px-3.5 py-2.5 text-sm outline-none" placeholder="e.g. GitHub" value="2FA Live" />
               </label>
               <label class="flex flex-col gap-1.5 text-xs font-bold text-[var(--text-secondary)]">
                 <span>Account / Email</span>
-                <input type="text" id="qrAccountInput" class="clay-input rounded-[14px] px-3.5 py-2.5 text-sm outline-none" placeholder="e.g. user@domain.com" value="user@example.com" />
+                <input type="text" id="qrAccountInput" class="glass-input rounded-[14px] px-3.5 py-2.5 text-sm outline-none" placeholder="e.g. user@domain.com" value="user@example.com" />
               </label>
             </div>
             <label class="flex flex-col gap-1.5 text-xs font-bold text-[var(--text-secondary)]">
               <span>Generated URI</span>
-              <input type="text" id="qrUriOutput" class="clay-input mono rounded-[14px] px-3.5 py-2.5 text-xs outline-none opacity-85" readonly />
+              <input type="text" id="qrUriOutput" class="glass-input mono rounded-[14px] px-3.5 py-2.5 text-xs outline-none opacity-85" readonly />
             </label>
             <div class="flex flex-wrap gap-3 pt-1">
-              <button type="button" class="btn btn-primary clay-btn-primary flex-1 py-3 px-5 rounded-[16px] text-sm font-extrabold text-white cursor-pointer border-0" id="downloadQrSvgBtn">Download SVG</button>
-              <button type="button" class="btn btn-secondary clay-btn flex-1 py-3 px-5 rounded-[16px] text-sm font-bold cursor-pointer" id="copyQrUriBtn">Copy URI</button>
+              <button type="button" class="btn btn-primary glass-btn-primary flex-1 py-3 px-5 rounded-[16px] text-sm font-extrabold text-white cursor-pointer border-0" id="downloadQrSvgBtn">Download SVG</button>
+              <button type="button" class="btn btn-secondary glass-btn flex-1 py-3 px-5 rounded-[16px] text-sm font-bold cursor-pointer" id="copyQrUriBtn">Copy URI</button>
             </div>
           </div>
 
           <div class="md:col-span-5 flex flex-col items-center gap-3.5">
-            <div class="qr-stage clay-qr-frame w-56 h-56 p-3.5 rounded-[28px] bg-white grid place-items-center" id="qrSvgContainer">
+            <div class="qr-stage glass-qr-frame w-56 h-56 p-3.5 rounded-[28px] bg-white grid place-items-center" id="qrSvgContainer">
               <span class="text-xs text-slate-400 text-center">Enter a valid Base32 secret to render QR</span>
             </div>
             <p class="text-xs text-center text-[var(--text-muted)] max-w-[260px]">Scan with Google Authenticator, Authy, or 1Password. Generated 100% offline.</p>
@@ -328,7 +328,7 @@
     <!-- Hero Intro Section -->
     <section class="hero-intro text-center max-w-2xl mx-auto flex flex-col gap-3 pt-2">
       <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">Generate <span class="text-gradient">2FA Tokens</span> Instantly</h1>
-      <p class="text-lg font-semibold text-[var(--text-primary)]">Your fast, tactile, and private alternative to mobile authenticator apps.</p>
+      <p class="text-lg font-semibold text-[var(--text-primary)]">Your fast, fluid, and private alternative to mobile authenticator apps.</p>
       <p class="text-sm sm:text-base text-[var(--text-secondary)]">
         Generate time-based one-time passwords (TOTP) directly inside your browser with Web Crypto API.
         No sign-ups, no ads, no tracking pixels, and zero data ever leaves your device.
@@ -339,76 +339,76 @@
     <section id="features" class="flex flex-col gap-6">
       <h2 class="section-title text-2xl sm:text-3xl font-extrabold tracking-tight text-center">Unlock the Future of <span class="text-gradient">Security</span></h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <article class="glass-card clay-card feature-card rounded-[28px] p-6 flex flex-col gap-3.5">
-          <div class="clay-badge-sky w-12 h-12 rounded-[16px] grid place-items-center">
+        <article class="glass-card feature-card rounded-[28px] p-6 flex flex-col gap-3.5">
+          <div class="glass-badge-sky w-12 h-12 rounded-[16px] grid place-items-center">
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
           <h3 class="text-lg font-extrabold">What is 2FA?</h3>
           <p class="text-sm text-[var(--text-secondary)] leading-relaxed">A lightweight web-based TOTP authenticator compatible with Google Authenticator, Microsoft Authenticator, and Authy. Generate 6- or 8-digit verification codes on any browser.</p>
         </article>
 
-        <article class="glass-card clay-card feature-card rounded-[28px] p-6 flex flex-col gap-3.5">
-          <div class="clay-badge-violet w-12 h-12 rounded-[16px] grid place-items-center">
+        <article class="glass-card feature-card rounded-[28px] p-6 flex flex-col gap-3.5">
+          <div class="glass-badge-violet w-12 h-12 rounded-[16px] grid place-items-center">
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
           </div>
           <h3 class="text-lg font-extrabold">Zero-Knowledge Architecture</h3>
           <p class="text-sm text-[var(--text-secondary)] leading-relaxed">Every cryptographic HMAC-SHA calculation executes 100% locally in your browser using native Web Crypto API. No backend servers, no analytics, and zero key logging.</p>
         </article>
 
-        <article class="glass-card clay-card feature-card rounded-[28px] p-6 flex flex-col gap-3.5">
-          <div class="clay-badge-emerald w-12 h-12 rounded-[16px] grid place-items-center">
+        <article class="glass-card feature-card rounded-[28px] p-6 flex flex-col gap-3.5">
+          <div class="glass-badge-emerald w-12 h-12 rounded-[16px] grid place-items-center">
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
           </div>
           <h3 class="text-lg font-extrabold">Lightning Fast</h3>
-          <p class="text-sm text-[var(--text-secondary)] leading-relaxed">Zero ad-bloat and instant token calculation the millisecond you paste a Base32 key, scan a QR code, or load multiple accounts in Bulk Mode.</p>
+          <p class="text-sm text-[var(--text-secondary)] leading-relaxed">Zero ad-bloat, cached Web Crypto keys, and instant token calculation the millisecond you paste a Base32 key, scan a QR code, or load multiple accounts in Bulk Mode.</p>
         </article>
       </div>
     </section>
 
-    <!-- Educational Section with 5-Step Clay Flow Diagram -->
-    <section id="how-it-works" class="glass-card clay-card content-card rounded-[32px] p-6 sm:p-8 flex flex-col gap-6">
+    <!-- Educational Section with 5-Step Flow Diagram -->
+    <section id="how-it-works" class="glass-card content-card rounded-[32px] p-6 sm:p-8 flex flex-col gap-6">
       <h2 class="section-title text-2xl font-extrabold tracking-tight">How does 2FA Authentication work?</h2>
 
-      <div class="clay-inset rounded-[24px] p-4 flex flex-col md:flex-row items-stretch justify-between gap-3" aria-label="5-step 2FA Authentication flow">
-        <div class="flow-step clay-subcard flex-1 rounded-[18px] p-4 flex flex-col items-center text-center gap-2">
+      <div class="glass-inset rounded-[24px] p-4 flex flex-col md:flex-row items-stretch justify-between gap-3" aria-label="5-step 2FA Authentication flow">
+        <div class="flow-step glass-subcard flex-1 rounded-[18px] p-4 flex flex-col items-center text-center gap-2">
           <span class="mono text-[11px] font-bold text-[var(--accent-primary)]">01</span>
-          <div class="clay-badge-sky w-10 h-10 rounded-[13px] grid place-items-center">
+          <div class="glass-badge-sky w-10 h-10 rounded-[13px] grid place-items-center">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
           </div>
           <h4 class="text-sm font-extrabold">Sign In</h4>
           <p class="text-xs text-[var(--text-secondary)]">Enter username &amp; password</p>
         </div>
         <div class="flow-arrow hidden md:grid place-items-center text-[var(--text-muted)] font-extrabold" aria-hidden="true">→</div>
-        <div class="flow-step clay-subcard flex-1 rounded-[18px] p-4 flex flex-col items-center text-center gap-2">
+        <div class="flow-step glass-subcard flex-1 rounded-[18px] p-4 flex flex-col items-center text-center gap-2">
           <span class="mono text-[11px] font-bold text-[var(--accent-primary)]">02</span>
-          <div class="clay-badge-amber w-10 h-10 rounded-[13px] grid place-items-center">
+          <div class="glass-badge-amber w-10 h-10 rounded-[13px] grid place-items-center">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg>
           </div>
           <h4 class="text-sm font-extrabold">2FA Prompt</h4>
           <p class="text-xs text-[var(--text-secondary)]">Site requests a TOTP token</p>
         </div>
         <div class="flow-arrow hidden md:grid place-items-center text-[var(--text-muted)] font-extrabold" aria-hidden="true">→</div>
-        <div class="flow-step clay-subcard flex-1 rounded-[18px] p-4 flex flex-col items-center text-center gap-2">
+        <div class="flow-step glass-subcard flex-1 rounded-[18px] p-4 flex flex-col items-center text-center gap-2">
           <span class="mono text-[11px] font-bold text-[var(--accent-primary)]">03</span>
-          <div class="clay-badge-primary w-10 h-10 rounded-[13px] grid place-items-center text-white">
+          <div class="glass-badge-primary w-10 h-10 rounded-[13px] grid place-items-center text-white">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
           </div>
           <h4 class="text-sm font-extrabold">Generate Token</h4>
           <p class="text-xs text-[var(--text-secondary)]">2FA Live computes 30s code</p>
         </div>
         <div class="flow-arrow hidden md:grid place-items-center text-[var(--text-muted)] font-extrabold" aria-hidden="true">→</div>
-        <div class="flow-step clay-subcard flex-1 rounded-[18px] p-4 flex flex-col items-center text-center gap-2">
+        <div class="flow-step glass-subcard flex-1 rounded-[18px] p-4 flex flex-col items-center text-center gap-2">
           <span class="mono text-[11px] font-bold text-[var(--accent-primary)]">04</span>
-          <div class="clay-badge-violet w-10 h-10 rounded-[13px] grid place-items-center">
+          <div class="glass-badge-violet w-10 h-10 rounded-[13px] grid place-items-center">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 12h.01M12 12h.01M17 12h.01"/></svg>
           </div>
           <h4 class="text-sm font-extrabold">Enter Code</h4>
           <p class="text-xs text-[var(--text-secondary)]">Paste 6-digit code in form</p>
         </div>
         <div class="flow-arrow hidden md:grid place-items-center text-[var(--text-muted)] font-extrabold" aria-hidden="true">→</div>
-        <div class="flow-step clay-subcard flex-1 rounded-[18px] p-4 flex flex-col items-center text-center gap-2">
-          <span class="mono text-[11px] font-bold text-emerald-500">05</span>
-          <div class="clay-badge-emerald w-10 h-10 rounded-[13px] grid place-items-center">
+        <div class="flow-step glass-subcard flex-1 rounded-[18px] p-4 flex flex-col items-center text-center gap-2">
+          <span class="mono text-[11px] font-bold text-emerald-400">05</span>
+          <div class="glass-badge-emerald w-10 h-10 rounded-[13px] grid place-items-center">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
           </div>
           <h4 class="text-sm font-extrabold">Access Granted</h4>
@@ -424,66 +424,66 @@
 
     <!-- Step-by-Step Guide & Compatibility Split -->
     <div class="two-col-sections grid grid-cols-1 md:grid-cols-2 gap-6">
-      <section class="glass-card clay-card content-card rounded-[30px] p-6 sm:p-7 flex flex-col gap-5">
+      <section class="glass-card content-card rounded-[30px] p-6 sm:p-7 flex flex-col gap-5">
         <h2 class="section-title text-xl font-extrabold tracking-tight">How to use 2FA Live Generator</h2>
         <ol class="step-list flex flex-col gap-4 list-none">
           <li class="flex items-start gap-3.5">
-            <span class="clay-badge-primary w-8 h-8 rounded-[11px] mono text-xs font-extrabold text-white grid place-items-center shrink-0">1</span>
+            <span class="glass-badge-primary w-8 h-8 rounded-[11px] mono text-xs font-extrabold text-white grid place-items-center shrink-0">1</span>
             <div>
               <h4 class="text-sm font-extrabold mb-0.5">Obtain your Secret Key</h4>
               <p class="text-xs text-[var(--text-secondary)] leading-relaxed">In your account security settings (GitHub, Discord, Crypto Exchanges), choose <em>Authenticator App</em> and copy the text setup key or QR code.</p>
             </div>
           </li>
           <li class="flex items-start gap-3.5">
-            <span class="clay-badge-primary w-8 h-8 rounded-[11px] mono text-xs font-extrabold text-white grid place-items-center shrink-0">2</span>
+            <span class="glass-badge-primary w-8 h-8 rounded-[11px] mono text-xs font-extrabold text-white grid place-items-center shrink-0">2</span>
             <div>
               <h4 class="text-sm font-extrabold mb-0.5">Input or Scan the Key</h4>
-              <p class="text-xs text-[var(--text-secondary)] leading-relaxed">Paste the Base32 key (e.g. <code class="mono px-1.5 py-0.5 rounded bg-[var(--clay-chip-bg)]">JBSWY3DPEHPK3PXP</code>), paste an <code class="mono px-1.5 py-0.5 rounded bg-[var(--clay-chip-bg)]">otpauth://</code> URI, or use <strong>Scan QR / Upload QR</strong>.</p>
+              <p class="text-xs text-[var(--text-secondary)] leading-relaxed">Paste the Base32 key (e.g. <code class="mono px-1.5 py-0.5 rounded bg-[var(--glass-chip-bg)]">JBSWY3DPEHPK3PXP</code>), paste an <code class="mono px-1.5 py-0.5 rounded bg-[var(--glass-chip-bg)]">otpauth://</code> URI, or use <strong>Scan QR / Upload QR</strong>.</p>
             </div>
           </li>
           <li class="flex items-start gap-3.5">
-            <span class="clay-badge-primary w-8 h-8 rounded-[11px] mono text-xs font-extrabold text-white grid place-items-center shrink-0">3</span>
+            <span class="glass-badge-primary w-8 h-8 rounded-[11px] mono text-xs font-extrabold text-white grid place-items-center shrink-0">3</span>
             <div>
               <h4 class="text-sm font-extrabold mb-0.5">Copy your Live TOTP</h4>
-              <p class="text-xs text-[var(--text-secondary)] leading-relaxed">Your 6-digit token updates automatically every 30 seconds. Click <strong>Copy Code</strong> (or press <code class="mono px-1.5 py-0.5 rounded bg-[var(--clay-chip-bg)]">Ctrl+C</code>) and paste it to log in.</p>
+              <p class="text-xs text-[var(--text-secondary)] leading-relaxed">Your 6-digit token updates automatically every 30 seconds. Click <strong>Copy Code</strong> (or press <code class="mono px-1.5 py-0.5 rounded bg-[var(--glass-chip-bg)]">Ctrl+C</code>) and paste it to log in.</p>
             </div>
           </li>
         </ol>
       </section>
 
-      <section class="glass-card clay-card content-card rounded-[30px] p-6 sm:p-7 flex flex-col gap-5">
+      <section class="glass-card content-card rounded-[30px] p-6 sm:p-7 flex flex-col gap-5">
         <h2 class="section-title text-xl font-extrabold tracking-tight">Universal Compatibility</h2>
         <p class="text-sm text-[var(--text-secondary)] leading-relaxed">Built strictly on the <strong class="text-[var(--text-primary)]">RFC 6238 TOTP</strong> standard. Avoid single-device lock-in and pair seamlessly with any encrypted password manager across all major platforms:</p>
         <ul class="compat-grid grid grid-cols-1 sm:grid-cols-2 gap-3 list-none">
-          <li class="clay-subcard rounded-[15px] px-3.5 py-3 flex items-center gap-2.5 text-xs font-bold"><span class="text-[var(--accent-primary)] font-extrabold">✓</span> Crypto Exchanges</li>
-          <li class="clay-subcard rounded-[15px] px-3.5 py-3 flex items-center gap-2.5 text-xs font-bold"><span class="text-[var(--accent-primary)] font-extrabold">✓</span> Social Media (X, Meta)</li>
-          <li class="clay-subcard rounded-[15px] px-3.5 py-3 flex items-center gap-2.5 text-xs font-bold"><span class="text-[var(--accent-primary)] font-extrabold">✓</span> Dev Tools (GitHub, AWS)</li>
-          <li class="clay-subcard rounded-[15px] px-3.5 py-3 flex items-center gap-2.5 text-xs font-bold"><span class="text-[var(--accent-primary)] font-extrabold">✓</span> Gaming (Discord, Steam)</li>
-          <li class="clay-subcard rounded-[15px] px-3.5 py-3 flex items-center gap-2.5 text-xs font-bold"><span class="text-[var(--accent-primary)] font-extrabold">✓</span> Email Providers</li>
-          <li class="clay-subcard rounded-[15px] px-3.5 py-3 flex items-center gap-2.5 text-xs font-bold"><span class="text-[var(--accent-primary)] font-extrabold">✓</span> Financial Institutions</li>
+          <li class="glass-subcard rounded-[15px] px-3.5 py-3 flex items-center gap-2.5 text-xs font-bold"><span class="text-[var(--accent-primary)] font-extrabold">✓</span> Crypto Exchanges</li>
+          <li class="glass-subcard rounded-[15px] px-3.5 py-3 flex items-center gap-2.5 text-xs font-bold"><span class="text-[var(--accent-primary)] font-extrabold">✓</span> Social Media (X, Meta)</li>
+          <li class="glass-subcard rounded-[15px] px-3.5 py-3 flex items-center gap-2.5 text-xs font-bold"><span class="text-[var(--accent-primary)] font-extrabold">✓</span> Dev Tools (GitHub, AWS)</li>
+          <li class="glass-subcard rounded-[15px] px-3.5 py-3 flex items-center gap-2.5 text-xs font-bold"><span class="text-[var(--accent-primary)] font-extrabold">✓</span> Gaming (Discord, Steam)</li>
+          <li class="glass-subcard rounded-[15px] px-3.5 py-3 flex items-center gap-2.5 text-xs font-bold"><span class="text-[var(--accent-primary)] font-extrabold">✓</span> Email Providers</li>
+          <li class="glass-subcard rounded-[15px] px-3.5 py-3 flex items-center gap-2.5 text-xs font-bold"><span class="text-[var(--accent-primary)] font-extrabold">✓</span> Financial Institutions</li>
         </ul>
       </section>
     </div>
 
     <!-- Interactive FAQ Accordion -->
-    <section id="faq" class="glass-card clay-card content-card rounded-[32px] p-6 sm:p-8 flex flex-col gap-5">
+    <section id="faq" class="glass-card content-card rounded-[32px] p-6 sm:p-8 flex flex-col gap-5">
       <h2 class="section-title text-2xl font-extrabold tracking-tight">Frequently Asked Questions</h2>
       <div class="flex flex-col gap-3">
-        <details class="faq-item clay-inset rounded-[20px] px-5 py-4" open>
+        <details class="faq-item glass-inset rounded-[20px] px-5 py-4" open>
           <summary class="font-bold text-sm sm:text-base cursor-pointer list-none flex items-center justify-between">Is this tool safe to use?</summary>
           <p class="mt-2.5 text-sm text-[var(--text-secondary)] leading-relaxed">Yes. All cryptographic HMAC calculations happen 100% client-side inside your browser's built-in Web Crypto API. No secret keys are ever transmitted over the network, and there are zero third-party ad scripts or analytics trackers on this page.</p>
         </details>
-        <details class="faq-item clay-inset rounded-[20px] px-5 py-4">
+        <details class="faq-item glass-inset rounded-[20px] px-5 py-4">
           <summary class="font-bold text-sm sm:text-base cursor-pointer list-none flex items-center justify-between">Can I use this offline?</summary>
           <p class="mt-2.5 text-sm text-[var(--text-secondary)] leading-relaxed">Yes! Once loaded, you can turn off Wi-Fi or unplug your ethernet cable and continue generating accurate TOTP codes, scanning QR codes (via native BarcodeDetector), and exporting QR codes completely offline.</p>
         </details>
-        <details class="faq-item clay-inset rounded-[20px] px-5 py-4">
+        <details class="faq-item glass-inset rounded-[20px] px-5 py-4">
           <summary class="font-bold text-sm sm:text-base cursor-pointer list-none flex items-center justify-between">Why is my code being rejected?</summary>
           <p class="mt-2.5 text-sm text-[var(--text-secondary)] leading-relaxed">TOTP relies on accurate time synchronization. If your generated code is rejected, ensure your computer or phone clock is set to <strong>Automatic date &amp; time</strong> (synced via NTP), and verify that you copied the complete Base32 secret key without typos.</p>
         </details>
-        <details class="faq-item clay-inset rounded-[20px] px-5 py-4">
+        <details class="faq-item glass-inset rounded-[20px] px-5 py-4">
           <summary class="font-bold text-sm sm:text-base cursor-pointer list-none flex items-center justify-between">Where are my Recent Keys stored?</summary>
-          <p class="mt-2.5 text-sm text-[var(--text-secondary)] leading-relaxed">Recent keys are stored exclusively in your browser's <code class="mono px-1.5 py-0.5 rounded bg-[var(--clay-chip-bg)]">localStorage</code> so you can quickly switch between accounts. Click <strong>Clear</strong> at any time to permanently wipe them from your browser.</p>
+          <p class="mt-2.5 text-sm text-[var(--text-secondary)] leading-relaxed">Recent keys are stored exclusively in your browser's <code class="mono px-1.5 py-0.5 rounded bg-[var(--glass-chip-bg)]">localStorage</code> so you can quickly switch between accounts. Click <strong>Clear</strong> at any time to permanently wipe them from your browser.</p>
         </details>
       </div>
     </section>
@@ -491,7 +491,7 @@
 
   <!-- Footer -->
   <footer class="site-footer px-4 pb-8">
-    <div class="max-w-5xl mx-auto clay-card rounded-[24px] px-6 py-5 flex flex-wrap items-center justify-between gap-4">
+    <div class="max-w-5xl mx-auto glass-card rounded-[24px] px-6 py-5 flex flex-wrap items-center justify-between gap-4">
       <p class="copyright text-xs font-semibold text-[var(--text-muted)]">&copy; 2026 2FA Live. 100% Client-Side &amp; Ad-Free.</p>
       <div class="flex flex-wrap gap-4">
         <button type="button" class="footer-link text-xs font-bold text-[var(--text-secondary)] hover:text-[var(--accent-primary)] bg-transparent border-0 cursor-pointer" data-modal="about">About Us</button>
@@ -505,10 +505,10 @@
 
   <!-- Webcam QR Scanner Modal -->
   <div class="modal-backdrop hidden fixed inset-0 z-50 bg-slate-950/45 backdrop-blur-md grid place-items-center p-5" id="scannerModal" role="dialog" aria-modal="true" aria-labelledby="scannerModalTitle">
-    <div class="clay-card modal-box w-full max-w-lg rounded-[30px] p-6 flex flex-col gap-4">
+    <div class="glass-card modal-box w-full max-w-lg rounded-[30px] p-6 flex flex-col gap-4">
       <div class="flex items-center justify-between">
         <h3 id="scannerModalTitle" class="text-lg font-extrabold">Scan 2FA QR Code</h3>
-        <button type="button" class="clay-btn w-9 h-9 rounded-[12px] grid place-items-center cursor-pointer" id="closeScannerBtn" aria-label="Close Scanner">
+        <button type="button" class="glass-btn w-9 h-9 rounded-[12px] grid place-items-center cursor-pointer" id="closeScannerBtn" aria-label="Close Scanner">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg>
         </button>
       </div>
@@ -524,10 +524,10 @@
 
   <!-- Info / Legal / Quick QR Modal -->
   <div class="modal-backdrop hidden fixed inset-0 z-50 bg-slate-950/45 backdrop-blur-md grid place-items-center p-5" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
-    <div class="clay-card modal-box w-full max-w-lg rounded-[30px] p-6 flex flex-col gap-4">
+    <div class="glass-card modal-box w-full max-w-lg rounded-[30px] p-6 flex flex-col gap-4">
       <div class="flex items-center justify-between">
         <h3 id="infoModalTitle" class="text-lg font-extrabold">Modal Title</h3>
-        <button type="button" class="clay-btn w-9 h-9 rounded-[12px] grid place-items-center cursor-pointer" id="closeInfoModalBtn" aria-label="Close Modal">
+        <button type="button" class="glass-btn w-9 h-9 rounded-[12px] grid place-items-center cursor-pointer" id="closeInfoModalBtn" aria-label="Close Modal">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg>
         </button>
       </div>
@@ -538,6 +538,6 @@
   <!-- Toast Container -->
   <div class="fixed bottom-5 right-5 z-[120] flex flex-col gap-2.5" id="toastContainer" aria-live="polite"></div>
 
-  <script type="module" src="./app.js"></script>
+  <script type="module" src="./src/main.js"></script>
 </body>
 </html>
