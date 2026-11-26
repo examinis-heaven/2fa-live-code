@@ -438,7 +438,9 @@ function startTicker() {
 
     const litCount = Math.ceil(progress * 30);
     for (let i = 0; i < 30; i++) {
-      ledSegments[i].classList.toggle('lit', i < litCount);
+      const isLit = i < litCount;
+      ledSegments[i].classList.toggle('lit', isLit);
+      ledSegments[i].classList.toggle('head', isLit && i === litCount - 1);
     }
 
     // Update Bulk Countdown Pill (always 30s standard view)

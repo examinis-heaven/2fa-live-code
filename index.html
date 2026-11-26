@@ -183,14 +183,14 @@
                 <span>ACTIVE TOKEN</span>
               </span>
               <span class="countdown-pill clay-pill-accent mono inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold" id="countdownPill" aria-live="off">
-                <span class="w-2 h-2 rounded-full bg-current"></span>
+                <span class="clay-liquid-dot" aria-hidden="true"></span>
                 <span id="countdownText">30s</span>
               </span>
             </div>
 
-            <!-- 30-Segment Clay Capsule Progress Bar -->
-            <div class="flex flex-col gap-1.5">
-              <div class="led-bar grid grid-cols-[repeat(30,minmax(0,1fr))] gap-[3px] h-3" id="ledBar" aria-hidden="true"></div>
+            <!-- 30-Segment Liquid Clay Progress Bar -->
+            <div class="flex flex-col gap-2">
+              <div class="led-bar clay-liquid-track grid grid-cols-[repeat(30,minmax(0,1fr))] gap-[4px] h-5 p-[4px] rounded-full" id="ledBar" aria-hidden="true"></div>
               <div class="flex justify-between mono text-[10px] font-semibold tracking-wider text-[var(--text-muted)]" aria-hidden="true">
                 <span>SYS.BUFFER.01</span>
                 <span id="hudSyncLabel">SYNC_OK</span>
@@ -246,7 +246,7 @@
           <div class="flex items-center justify-between pt-3 border-t border-[var(--clay-divider)]">
             <span class="text-xs font-extrabold tracking-widest uppercase text-[var(--text-secondary)]">LIVE MULTI-TOKEN BOARD (<span id="bulkCount">0</span>)</span>
             <span class="countdown-pill clay-pill-accent mono inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold" id="bulkCountdownPill">
-              <span class="w-2 h-2 rounded-full bg-current"></span>
+              <span class="clay-liquid-dot" aria-hidden="true"></span>
               <span id="bulkCountdownText">30s</span>
             </span>
           </div>
