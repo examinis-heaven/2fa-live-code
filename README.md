@@ -14,7 +14,10 @@ No ads, no analytics, no runtime frameworks, and zero network requests for crypt
   - Pure JavaScript SVG QR generator (works 100% offline with SVG download).
   - Live webcam QR scanner and QR image upload powered by native `BarcodeDetector` (with automatic lazy-loaded `jsQR` fallback).
 - **Local Vault (`localStorage`)**: Quick-access list of recent keys with live ticking codes, masked secret preview, and instant QR popup.
-- **Dark & Light Theme**: Cyberpunk glassmorphism dark theme by default with a smooth light mode toggle.
+- **Light & Dark Claymorphism Theme**: Tactile 3D Claymorphism UI built with **Tailwind CSS v4** utilities, soft multi-layered clay shadows, pastel badges, and a smooth Dark Clay toggle.
+- **Smooth Scroll & Motion Choreography**:
+  - **Lenis** smooth scrolling synced with **GSAP ScrollTrigger** for staggered one-by-one element reveals.
+  - **Motion** spring physics for card hover lifts, tab panel transitions, modal entrances, and holographic cursor spotlight glows (gracefully falls back when offline).
 - **Keyboard Shortcuts**: Press `Ctrl+C` (or click the token display) to copy the active code immediately; `Esc` closes any modal.
 
 ## Project Structure
@@ -24,8 +27,9 @@ No ads, no analytics, no runtime frameworks, and zero network requests for crypt
 ├── styles.css   # Lightweight glassmorphism styles (dark + light themes)
 ├── totp.js      # RFC 6238 TOTP engine using native Web Crypto API
 ├── qr.js        # Offline SVG QR encoder + BarcodeDetector / jsQR decoder
-├── app.js       # Interactive UI controller, ticker, bulk mode & local cache
-└── LICENSE      # MIT License
+├── app.js         # Interactive UI controller, ticker, bulk mode & local cache
+├── animations.js  # Lenis smooth scroll, GSAP ScrollTrigger & Motion spring hover/cards
+└── LICENSE        # MIT License
 ```
 
 ## Quick Start

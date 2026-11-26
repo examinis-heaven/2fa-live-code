@@ -10,6 +10,13 @@ import {
   getTimeStepInfo,
 } from './totp.js';
 import { generateQRSvg, decodeQRFromSource } from './qr.js';
+import {
+  initAnimations,
+  animatePanelIn,
+  animateDynamicCards,
+  animateModalIn,
+  onModalClose,
+} from './animations.js';
 
 const STORAGE_RECENT_KEY = '2fa_live_recent_v1';
 const STORAGE_THEME_KEY = '2fa_live_theme';
@@ -104,6 +111,7 @@ initEvents();
 renderRecentKeys();
 initQrExportDefaults();
 startTicker();
+initAnimations();
 
 // --- Theme ---
 function initTheme() {
@@ -155,7 +163,9 @@ function initTabs() {
         b.setAttribute('aria-selected', String(isActive));
       });
       document.querySelectorAll('.tab-panel').forEach((panel) => {
-        panel.classList.toggle('active', panel.id === `panel-${target}`);
+        const isActive = panel.id === `panel-${target}`;
+        panel.classList.toggle('active', isActive);
+        if (isActive) animatePanelIn(panel);
       });
 
       if (target === 'qrgen' && state.secret && !els.qrSecretInput.value) {
@@ -548,6 +558,7 @@ function renderRecentKeys() {
         </div>
       `;
       els.infoModal.classList.remove('hidden');
+      animateModalIn(els.infoModal);
     });
 
     row.querySelector('.row-mini-btn.del').addEventListener('click', (e) => {
@@ -561,6 +572,7 @@ function renderRecentKeys() {
   });
 
   refreshRecentCodes();
+  animateDynamicCards(els.recentList, '.recent-row');
 }
 
 async function refreshRecentCodes() {
@@ -643,6 +655,7 @@ function renderBulkGrid() {
   });
 
   refreshBulkCodes();
+  animateDynamicCards(els.bulkGrid, '.bulk-card');
 }
 
 async function refreshBulkCodes() {
@@ -706,6 +719,7 @@ async function openScanner() {
   }
 
   els.scannerModal.classList.remove('hidden');
+  animateModalIn(els.scannerModal);
   els.scannerStatus.textContent = 'Requesting camera permission...';
 
   try {
@@ -750,6 +764,7 @@ function closeScanner() {
   }
   els.scannerVideo.srcObject = null;
   els.scannerModal.classList.add('hidden');
+  onModalClose();
 }
 
 async function handleQrImageUpload(e) {
@@ -818,10 +833,12 @@ function openLegalModal(key) {
   els.infoModalTitle.textContent = data.title;
   els.infoModalBody.innerHTML = data.html;
   els.infoModal.classList.remove('hidden');
+  animateModalIn(els.infoModal);
 }
 
 function closeInfoModal() {
   els.infoModal.classList.add('hidden');
+  onModalClose();
 }
 
 // --- Utilities ---
