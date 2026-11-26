@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2FA Live Code — Instant Browser TOTP Authenticator</title>
+  <meta name="description" content="Ultra-fast, zero-tracking, 100% browser-based 2FA TOTP code generator. Generate live 6-digit and 8-digit authentication tokens instantly with QR scan, bulk mode, and offline support." />
+  <meta name="theme-color" content="#0B0F19" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2300F0FF'/%3E%3Cstop offset='1' stop-color='%237000FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M16 7a9 9 0 0 0-9 9v1.5M16 10.5a5.5 5.5 0 0 0-5.5 5.5v3M16 14a2 2 0 0 0-2 2v5M20 12.5a5.5 5.5 0 0 1 1.5 3.5v4M24.5 14a9 9 0 0 1 .5 2v2' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- Ambient Background Layers -->
+  <div class="bg-ambient" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- Sticky Glass Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand" aria-label="2FA Live Code Home">
+        <span class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4" />
+            <path d="M14 13.12c0 2.38 0 6.38-1 8.88" />
+            <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02" />
+            <path d="M2 12a10 10 0 0 1 18-6" />
+            <path d="M2 16h.01" />
+            <path d="M21.8 16c.2-2 .131-5.354 0-6" />
+            <path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2" />
+            <path d="M8.65 22c.21-.66.45-1.32.57-2" />
+            <path d="M9 6.8a6 6 0 0 1 9 5.2v2" />
+          </svg>
+        </span>
+        <span class="brand-text">2FA Live <span class="text-gradient">Code</span></span>
+      </a>
+
+      <nav class="header-nav" aria-label="Primary">
+        <a href="#how-it-works" class="nav-link">How it works</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+        <button type="button" class="nav-link nav-btn" data-modal="privacy">Privacy</button>
+      </nav>
+
+      <div class="header-actions">
+        <span class="status-pill" id="offlineStatus" title="All TOTP cryptographic calculations run 100% locally in your browser">
+          <span class="status-dot"></span>
+          <span class="status-label">100% Local</span>
+        </span>
+        <button type="button" class="icon-btn" id="themeToggle" aria-label="Toggle Light/Dark Theme" title="Toggle Theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <!-- Main Interactive 2FA Tool Card (Above the fold) -->
+    <section class="glass-card tool-card" aria-label="2FA Live Code Generator">
+      <!-- Mode Switcher Bar -->
+      <div class="tool-tabs" role="tablist" aria-label="Generator Modes">
+        <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-tab="single">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <span>Live Generator</span>
+        </button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="bulk">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          <span>Multi / Bulk</span>
+        </button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="qrgen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zm4 4h3v3h-3zm-4 3h2m3-7h2"/></svg>
+          <span>QR Export</span>
+        </button>
+      </div>
+
+      <!-- TAB 1: SINGLE KEY LIVE GENERATOR -->
+      <div class="tab-panel active" id="panel-single" role="tabpanel">
+        <div class="tool-grid">
+          <!-- Left Column: Input -->
+          <div class="tool-col input-col">
+            <div class="field-header">
+              <label for="secretInput" class="cyber-label">AUTHENTICATION SECRET KEY</label>
+              <button type="button" class="text-action-btn" id="tryDemoBtn" title="Fill with a sample RFC 6238 secret key">Try Demo</button>
+            </div>
+
+            <div class="textarea-wrap">
+              <textarea
+                id="secretInput"
+                class="secret-textarea mono"
+                rows="4"
+                spellcheck="false"
+                autocomplete="off"
+                autocapitalize="characters"
+                placeholder="e.g. JBSW Y3DP EHPK 3PXP&#10;or paste otpauth://totp/... URI"
+                aria-label="Authentication Secret Key"
+              ></textarea>
+              <button type="button" class="clear-input-btn hidden" id="clearInputBtn" aria-label="Clear Secret Key" title="Clear Secret Key">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
+
+            <div class="input-feedback" id="inputFeedback" aria-live="polite"></div>
+
+            <!-- Action Buttons Row -->
+            <div class="action-row">
+              <button type="button" class="btn btn-secondary" id="pasteBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+                <span>Paste Key</span>
+              </button>
+
+              <div class="btn-group">
+                <button type="button" class="btn btn-secondary" id="scanQrBtn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2m10 0h2a2 2 0 0 1 2 2v2m0 10v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
+                  <span>Scan QR</span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-icon-only" id="uploadQrBtn" title="Upload QR Image" aria-label="Upload QR Image">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </button>
+                <input type="file" id="qrFileInput" accept="image/*" class="sr-only" />
+              </div>
+            </div>
+
+            <!-- Collapsible Advanced Options & Account Label -->
+            <div class="advanced-wrap">
+              <button type="button" class="advanced-toggle" id="advancedToggle" aria-expanded="false">
+                <span class="advanced-toggle-left">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+                  <span>TOTP Parameters &amp; Label</span>
+                </span>
+                <span class="param-summary mono" id="paramSummary">6d • 30s • SHA-1</span>
+              </button>
+
+              <div class="advanced-drawer hidden" id="advancedDrawer">
+                <div class="param-row">
+                  <label class="param-field">
+                    <span>Label (optional)</span>
+                    <input type="text" id="accountLabelInput" class="mini-input" placeholder="e.g. GitHub, Binance" maxlength="40" />
+                  </label>
+                </div>
+                <div class="param-grid">
+                  <label class="param-field">
+                    <span>Digits</span>
+                    <select id="digitsSelect" class="mini-select mono">
+                      <option value="6" selected>6 Digits</option>
+                      <option value="8">8 Digits</option>
+                    </select>
+                  </label>
+                  <label class="param-field">
+                    <span>Period</span>
+                    <select id="periodSelect" class="mini-select mono">
+                      <option value="30" selected>30 sec</option>
+                      <option value="60">60 sec</option>
+                      <option value="15">15 sec</option>
+                    </select>
+                  </label>
+                  <label class="param-field">
+                    <span>Algorithm</span>
+                    <select id="algoSelect" class="mini-select mono">
+                      <option value="SHA-1" selected>SHA-1</option>
+                      <option value="SHA-256">SHA-256</option>
+                      <option value="SHA-512">SHA-512</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Zero-Knowledge Privacy Notice -->
+            <div class="privacy-notice">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              <p>Your keys are processed <strong>100% locally</strong> via Web Crypto API. Zero server requests, zero ads, zero tracking. Disconnect from the internet to verify.</p>
+            </div>
+          </div>
+
+          <!-- Right Column: Live Output -->
+          <div class="tool-col output-col">
+            <div class="token-top-bar">
+              <span class="token-heading">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                <span>ACTIVE TOKEN</span>
+              </span>
+              <span class="countdown-pill mono" id="countdownPill" aria-live="off">
+                <span class="pill-dot"></span>
+                <span id="countdownText">30s</span>
+              </span>
+            </div>
+
+            <!-- 30-Segment LED Progress Bar -->
+            <div class="led-progress-wrap">
+              <div class="led-bar" id="ledBar" aria-hidden="true"></div>
+              <div class="hud-meta mono" aria-hidden="true">
+                <span>SYS.BUFFER.01</span>
+                <span id="hudSyncLabel">SYNC_OK</span>
+                <span id="hudHexLabel">0x1E</span>
+              </div>
+            </div>
+
+            <!-- Big Glowing Token Box -->
+            <button type="button" class="token-display-box" id="tokenDisplayBox" title="Click to copy code" aria-label="Active 2FA Token. Click to copy">
+              <span class="token-value mono" id="tokenValue">--- ---</span>
+              <span class="token-next mono" id="nextTokenPreview" title="Upcoming code in next cycle"></span>
+            </button>
+
+            <!-- Primary Copy CTA -->
+            <button type="button" class="btn btn-primary btn-copy-main" id="copyCodeBtn" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span id="copyBtnLabel">Copy Code</span>
+              <kbd class="kbd-hint">Ctrl+C</kbd>
+            </button>
+
+            <!-- Recent Keys Local Cache -->
+            <div class="recent-section">
+              <div class="recent-header">
+                <span class="cyber-label-sm">RECENT KEYS (LOCAL CACHE)</span>
+                <button type="button" class="text-danger-btn hidden" id="clearRecentBtn">Clear</button>
+              </div>
+              <div class="recent-list" id="recentList">
+                <div class="recent-empty">No recent keys yet. Paste a secret key or click <strong>Try Demo</strong>.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: MULTI / BULK 2FA MODE -->
+      <div class="tab-panel" id="panel-bulk" role="tabpanel">
+        <div class="bulk-layout">
+          <div class="bulk-input-pane">
+            <div class="field-header">
+              <label for="bulkInput" class="cyber-label">BULK SECRET KEYS (ONE PER LINE)</label>
+              <button type="button" class="text-action-btn" id="bulkDemoBtn">Load Sample List</button>
+            </div>
+            <textarea
+              id="bulkInput"
+              class="secret-textarea mono"
+              rows="5"
+              spellcheck="false"
+              placeholder="GitHub: JBSWY3DPEHPK3PXP&#10;Binance: HXDMVJECJJWSRB3H&#10;Discord: GEZDGNBVGY3TQOJQ"
+            ></textarea>
+            <p class="helper-text">Format: <code>Label: SECRET_KEY</code>, raw <code>SECRET_KEY</code>, or <code>otpauth://</code> URI — one per line.</p>
+          </div>
+
+          <div class="bulk-header-bar">
+            <span class="cyber-label-sm">LIVE MULTI-TOKEN BOARD (<span id="bulkCount">0</span>)</span>
+            <span class="countdown-pill mono" id="bulkCountdownPill">
+              <span class="pill-dot"></span>
+              <span id="bulkCountdownText">30s</span>
+            </span>
+          </div>
+
+          <div class="bulk-grid" id="bulkGrid">
+            <div class="recent-empty">Enter one or more secret keys above to monitor all live 2FA codes simultaneously.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: QR EXPORT / GENERATOR -->
+      <div class="tab-panel" id="panel-qrgen" role="tabpanel">
+        <div class="qrgen-grid">
+          <div class="qrgen-form">
+            <div class="field-header">
+              <span class="cyber-label">GENERATE OTPAUTH QR CODE</span>
+              <button type="button" class="text-action-btn" id="genRandomSecretBtn">Random Secret</button>
+            </div>
+
+            <label class="param-field">
+              <span>Secret Key (Base32)</span>
+              <input type="text" id="qrSecretInput" class="mini-input mono" placeholder="JBSWY3DPEHPK3PXP" autocomplete="off" />
+            </label>
+            <div class="param-grid-2">
+              <label class="param-field">
+                <span>Issuer / Service</span>
+                <input type="text" id="qrIssuerInput" class="mini-input" placeholder="e.g. GitHub" value="2FA Live" />
+              </label>
+              <label class="param-field">
+                <span>Account / Email</span>
+                <input type="text" id="qrAccountInput" class="mini-input" placeholder="e.g. user@domain.com" value="user@example.com" />
+              </label>
+            </div>
+            <label class="param-field">
+              <span>Generated URI</span>
+              <input type="text" id="qrUriOutput" class="mini-input mono" readonly />
+            </label>
+            <div class="action-row">
+              <button type="button" class="btn btn-primary" id="downloadQrSvgBtn">Download SVG</button>
+              <button type="button" class="btn btn-secondary" id="copyQrUriBtn">Copy URI</button>
+            </div>
+          </div>
+
+          <div class="qrgen-preview-col">
+            <div class="qr-stage" id="qrSvgContainer">
+              <span class="recent-empty">Enter a valid Base32 secret to render QR</span>
+            </div>
+            <p class="helper-text text-center">Scan with Google Authenticator, Authy, 1Password, or any RFC 6238 app. Generated 100% offline.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hero Intro Section -->
+    <section class="hero-intro">
+      <h1 class="hero-title">Generate <span class="text-gradient">2FA Tokens</span> Instantly</h1>
+      <p class="hero-subtitle">Your fast, free, and secure alternative to mobile authenticator apps.</p>
+      <p class="hero-desc">
+        Generate time-based one-time passwords (TOTP) directly inside your browser with Web Crypto API.
+        No sign-ups, no ads, no tracking pixels, and zero data ever leaves your device.
+      </p>
+    </section>
+
+    <!-- Features Grid -->
+    <section id="features" class="section-block">
+      <h2 class="section-title text-center">Unlock the Future of <span class="text-gradient">Security</span></h2>
+      <div class="features-grid">
+        <article class="glass-card feature-card">
+          <div class="feature-icon cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3>What is 2FA?</h3>
+          <p>A lightweight web-based TOTP authenticator compatible with Google Authenticator, Microsoft Authenticator, and Authy. Generate 6- or 8-digit verification codes on any desktop or mobile browser.</p>
+        </article>
+
+        <article class="glass-card feature-card">
+          <div class="feature-icon purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <h3>Zero-Knowledge Architecture</h3>
+          <p>Every cryptographic HMAC-SHA calculation executes 100% locally in your browser using native Web Crypto API. No backend servers, no analytics, no cookies, and zero key logging.</p>
+        </article>
+
+        <article class="glass-card feature-card">
+          <div class="feature-icon cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3>Lightning Fast</h3>
+          <p>Zero bloat, zero runtime frameworks, and instant token calculation the millisecond you paste a Base32 key, scan a QR code, or load multiple accounts in Bulk Mode.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Educational Section with Crisp Interactive SVG Infographic -->
+    <section id="how-it-works" class="glass-card content-card">
+      <h2 class="section-title">How does 2FA Authentication work?</h2>
+
+      <!-- Interactive 5-Step Flow Diagram (Inline SVG — 0 external image requests) -->
+      <div class="flow-diagram" aria-label="5-step 2FA Authentication flow">
+        <div class="flow-step">
+          <div class="flow-badge">01</div>
+          <div class="flow-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          </div>
+          <h4>Sign In</h4>
+          <p>Enter username &amp; password</p>
+        </div>
+        <div class="flow-arrow" aria-hidden="true">→</div>
+        <div class="flow-step">
+          <div class="flow-badge">02</div>
+          <div class="flow-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg>
+          </div>
+          <h4>2FA Prompt</h4>
+          <p>Site requests a TOTP token</p>
+        </div>
+        <div class="flow-arrow" aria-hidden="true">→</div>
+        <div class="flow-step active-step">
+          <div class="flow-badge">03</div>
+          <div class="flow-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h4>Generate Token</h4>
+          <p>2FA Live computes 30s code</p>
+        </div>
+        <div class="flow-arrow" aria-hidden="true">→</div>
+        <div class="flow-step">
+          <div class="flow-badge">04</div>
+          <div class="flow-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 12h.01M12 12h.01M17 12h.01"/></svg>
+          </div>
+          <h4>Enter Code</h4>
+          <p>Paste 6-digit code in form</p>
+        </div>
+        <div class="flow-arrow" aria-hidden="true">→</div>
+        <div class="flow-step">
+          <div class="flow-badge">05</div>
+          <div class="flow-icon success">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <h4>Access Granted</h4>
+          <p>Verified &amp; protected login</p>
+        </div>
+      </div>
+
+      <div class="prose">
+        <p>Passwords alone can be leaked, phished, or guessed. Two-Factor Authentication (2FA) adds a dynamic second layer of defense by combining something you know (your password) with a time-sensitive cryptographic token generated from a shared secret key.</p>
+        <p>Using the open <strong>RFC 6238 (TOTP)</strong> standard, your secret key is hashed together with the current Unix timestamp every 30 seconds via HMAC-SHA1/256/512. Because both your browser and the target service share the same secret and clock, the code matches automatically without needing any network communication.</p>
+      </div>
+    </section>
+
+    <!-- Step-by-Step Guide & Compatibility Split -->
+    <div class="two-col-sections">
+      <section class="glass-card content-card">
+        <h2 class="section-title">How to use 2FA Live Generator</h2>
+        <ol class="step-list">
+          <li>
+            <span class="step-num">1</span>
+            <div>
+              <h4>Obtain your Secret Key</h4>
+              <p>In your account security settings (GitHub, Discord, Crypto Exchanges), choose <em>Authenticator App</em> and copy the text setup key or QR code.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <div>
+              <h4>Input or Scan the Key</h4>
+              <p>Paste the Base32 key (e.g. <code>JBSWY3DPEHPK3PXP</code>), paste an <code>otpauth://</code> URI, or use <strong>Scan QR / Upload QR</strong>.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <div>
+              <h4>Copy your Live TOTP</h4>
+              <p>Your 6-digit token updates automatically every 30 seconds. Click <strong>Copy Code</strong> (or press <code>Ctrl+C</code>) and paste it to log in.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="glass-card content-card">
+        <h2 class="section-title">Universal Compatibility</h2>
+        <p class="prose-sm">Built strictly on the <strong>RFC 6238 TOTP</strong> standard. Avoid single-device lock-in and pair seamlessly with any encrypted password manager across all major platforms:</p>
+        <ul class="compat-grid">
+          <li><span class="check-icon">✓</span> Crypto Exchanges</li>
+          <li><span class="check-icon">✓</span> Social Media (X, Meta)</li>
+          <li><span class="check-icon">✓</span> Dev Tools (GitHub, AWS)</li>
+          <li><span class="check-icon">✓</span> Gaming (Discord, Steam)</li>
+          <li><span class="check-icon">✓</span> Email Providers</li>
+          <li><span class="check-icon">✓</span> Financial Institutions</li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- Interactive FAQ Accordion -->
+    <section id="faq" class="glass-card content-card">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Is this tool safe to use?</summary>
+          <p>Yes. All cryptographic HMAC calculations happen 100% client-side inside your browser's built-in Web Crypto API. No secret keys are ever transmitted over the network, and there are zero third-party ad scripts or analytics trackers on this page.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I use this offline?</summary>
+          <p>Yes! Once loaded, you can turn off Wi-Fi or unplug your ethernet cable and continue generating accurate TOTP codes, scanning QR codes (via native BarcodeDetector), and exporting QR codes completely offline.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Why is my code being rejected?</summary>
+          <p>TOTP relies on accurate time synchronization. If your generated code is rejected, ensure your computer or phone clock is set to <strong>Automatic date &amp; time</strong> (synced via NTP), and verify that you copied the complete Base32 secret key without typos.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Where are my Recent Keys stored?</summary>
+          <p>Recent keys are stored exclusively in your browser's <code>localStorage</code> so you can quickly switch between accounts. Click <strong>Clear</strong> at any time to permanently wipe them from your browser.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="copyright">&copy; 2026 2FA Live. 100% Client-Side &amp; Ad-Free.</p>
+      <div class="footer-links">
+        <button type="button" class="footer-link" data-modal="about">About Us</button>
+        <button type="button" class="footer-link" data-modal="contact">Contact Us</button>
+        <button type="button" class="footer-link" data-modal="privacy">Privacy Policy</button>
+        <button type="button" class="footer-link" data-modal="disclaimer">Disclaimer</button>
+        <button type="button" class="footer-link" data-modal="terms">Terms &amp; Conditions</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Webcam QR Scanner Modal -->
+  <div class="modal-backdrop hidden" id="scannerModal" role="dialog" aria-modal="true" aria-labelledby="scannerModalTitle">
+    <div class="glass-card modal-box scanner-modal-box">
+      <div class="modal-header">
+        <h3 id="scannerModalTitle">Scan 2FA QR Code</h3>
+        <button type="button" class="icon-btn" id="closeScannerBtn" aria-label="Close Scanner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="scanner-viewport">
+        <video id="scannerVideo" playsinline muted></video>
+        <div class="scanner-reticle" aria-hidden="true">
+          <span class="laser-line"></span>
+        </div>
+      </div>
+      <p class="helper-text text-center" id="scannerStatus">Point your camera at a 2FA QR code...</p>
+    </div>
+  </div>
+
+  <!-- Info / Legal / Quick QR Modal -->
+  <div class="modal-backdrop hidden" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+    <div class="glass-card modal-box">
+      <div class="modal-header">
+        <h3 id="infoModalTitle">Modal Title</h3>
+        <button type="button" class="icon-btn" id="closeInfoModalBtn" aria-label="Close Modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="infoModalBody"></div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
