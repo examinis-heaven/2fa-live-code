@@ -188,9 +188,16 @@
               </span>
             </div>
 
-            <!-- 30-Segment Liquid Clay Progress Bar -->
+            <!-- Natural Continuous Liquid Clay Progress Bar -->
             <div class="flex flex-col gap-2">
-              <div class="led-bar clay-liquid-track grid grid-cols-[repeat(30,minmax(0,1fr))] gap-[4px] h-5 p-[4px] rounded-full" id="ledBar" aria-hidden="true"></div>
+              <div class="led-bar clay-liquid-track relative h-5 p-[4px] rounded-full overflow-hidden" id="ledBar" aria-hidden="true">
+                <div class="clay-track-ticks" aria-hidden="true"></div>
+                <div class="clay-liquid-fill" id="liquidFill" style="width: 100%;">
+                  <span class="clay-liquid-wave"></span>
+                  <span class="clay-liquid-wave wave-2"></span>
+                  <span class="clay-liquid-sheen"></span>
+                </div>
+              </div>
               <div class="flex justify-between mono text-[10px] font-semibold tracking-wider text-[var(--text-muted)]" aria-hidden="true">
                 <span>SYS.BUFFER.01</span>
                 <span id="hudSyncLabel">SYNC_OK</span>

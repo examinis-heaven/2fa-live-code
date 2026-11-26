@@ -44,6 +44,7 @@ const els = {
   countdownPill: $('countdownPill'),
   countdownText: $('countdownText'),
   ledBar: $('ledBar'),
+  liquidFill: $('liquidFill'),
   hudSyncLabel: $('hudSyncLabel'),
   hudHexLabel: $('hudHexLabel'),
   tokenDisplayBox: $('tokenDisplayBox'),
@@ -102,10 +103,8 @@ const state = {
 };
 
 // --- Initialization ---
-const ledSegments = [];
 initTheme();
 initOfflineIndicator();
-buildLedSegments();
 initTabs();
 initEvents();
 renderRecentKeys();
@@ -137,18 +136,6 @@ function initOfflineIndicator() {
   update();
   window.addEventListener('online', update);
   window.addEventListener('offline', update);
-}
-
-// --- 30-Segment LED Progress Bar ---
-function buildLedSegments() {
-  const frag = document.createDocumentFragment();
-  for (let i = 0; i < 30; i++) {
-    const seg = document.createElement('span');
-    seg.className = 'led-seg';
-    ledSegments.push(seg);
-    frag.appendChild(seg);
-  }
-  els.ledBar.appendChild(frag);
 }
 
 // --- Tabs ---
@@ -422,43 +409,51 @@ async function refreshSingleToken(animate = false) {
   }
 }
 
-// --- Master Ticker (250ms cadence — ultra light on CPU) ---
+// --- Master Ticker (60fps smooth liquid clay + step-triggered TOTP refresh) ---
 function startTicker() {
-  const tick = async () => {
+  let lastTextSec = -1;
+  let lastBulkSec = -1;
+
+  const frame = async () => {
     const now = Date.now();
     const { remainingSeconds, progress, stepIndex } = getTimeStepInfo(state.period, now);
     const expiring = remainingSeconds <= 5;
 
-    // Update Single Mode Countdown & 30-segment LED bar
-    els.countdownText.textContent = `${remainingSeconds}s`;
-    els.countdownPill.classList.toggle('expiring', expiring);
-    els.ledBar.classList.toggle('expiring', expiring);
-    els.hudHexLabel.textContent = `0x${remainingSeconds.toString(16).toUpperCase().padStart(2, '0')}`;
-    els.hudSyncLabel.textContent = expiring ? 'ROTATING' : 'SYNC_OK';
-
-    const litCount = Math.ceil(progress * 30);
-    for (let i = 0; i < 30; i++) {
-      const isLit = i < litCount;
-      ledSegments[i].classList.toggle('lit', isLit);
-      ledSegments[i].classList.toggle('head', isLit && i === litCount - 1);
+    // Smooth continuous 60fps liquid clay fill
+    if (els.liquidFill) {
+      els.liquidFill.style.width = `${Math.max(2, progress * 100).toFixed(2)}%`;
     }
 
-    // Update Bulk Countdown Pill (always 30s standard view)
-    const stdStep = getTimeStepInfo(30, now);
-    els.bulkCountdownText.textContent = `${stdStep.remainingSeconds}s`;
-    els.bulkCountdownPill.classList.toggle('expiring', stdStep.remainingSeconds <= 5);
+    // Update text labels only when integer second changes
+    if (remainingSeconds !== lastTextSec) {
+      lastTextSec = remainingSeconds;
+      els.countdownText.textContent = `${remainingSeconds}s`;
+      els.countdownPill.classList.toggle('expiring', expiring);
+      els.ledBar.classList.toggle('expiring', expiring);
+      els.hudHexLabel.textContent = `0x${remainingSeconds.toString(16).toUpperCase().padStart(2, '0')}`;
+      els.hudSyncLabel.textContent = expiring ? 'ROTATING' : 'SYNC_OK';
+    }
 
-    // Refresh tokens only when the time step changes
+    // Bulk countdown pill (30s standard)
+    const stdStep = getTimeStepInfo(30, now);
+    if (stdStep.remainingSeconds !== lastBulkSec) {
+      lastBulkSec = stdStep.remainingSeconds;
+      els.bulkCountdownText.textContent = `${stdStep.remainingSeconds}s`;
+      els.bulkCountdownPill.classList.toggle('expiring', stdStep.remainingSeconds <= 5);
+    }
+
+    // Refresh tokens only when the time step rotates
     if (stepIndex !== state.lastStepIndex) {
       state.lastStepIndex = stepIndex;
       if (state.secret) await refreshSingleToken(true);
       await refreshRecentCodes();
       if (state.bulkEntries.length > 0) await refreshBulkCodes();
     }
+
+    requestAnimationFrame(frame);
   };
 
-  tick();
-  setInterval(tick, 250);
+  requestAnimationFrame(frame);
 }
 
 // --- Recent Keys Local Vault ---
