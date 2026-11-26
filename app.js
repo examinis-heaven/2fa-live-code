@@ -20,7 +20,7 @@ import {
 } from './animations.js';
 
 const STORAGE_RECENT_KEY = '2fa_live_recent_v1';
-const STORAGE_THEME_KEY = '2fa_live_theme';
+const STORAGE_THEME_KEY = '2fa_live_theme_v3';
 const DEMO_SECRET = 'JBSWY3DPEHPK3PXP';
 
 // --- DOM References ---
