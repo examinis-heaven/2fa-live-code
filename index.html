@@ -13,9 +13,24 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="./styles.css" />
 </head>
-<body class="min-h-screen overflow-x-hidden antialiased selection:bg-indigo-500/20 selection:text-indigo-700">
-  <!-- Soft Clay Ambient Blobs -->
-  <div class="bg-ambient fixed inset-0 -z-20 pointer-events-none" aria-hidden="true"></div>
+<body class="min-h-screen overflow-x-hidden antialiased selection:bg-cyan-400/25 selection:text-cyan-200">
+  <!-- SVG Optical Refraction & Liquid Merge Filters -->
+  <svg class="sr-only" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="liquid-goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="goo" />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Flowing Chromatic Liquid Orbs (Refracted through Liquid Glass) -->
+  <div class="bg-ambient fixed inset-0 -z-20 pointer-events-none overflow-hidden" aria-hidden="true">
+    <span class="liquid-orb orb-1"></span>
+    <span class="liquid-orb orb-2"></span>
+    <span class="liquid-orb orb-3"></span>
+  </div>
 
   <!-- Sticky Clay Header -->
   <header class="site-header sticky top-0 z-40 px-4 pt-3 pb-2">
@@ -60,17 +75,18 @@
   <main class="max-w-5xl mx-auto px-4 sm:px-6 pt-5 pb-16 flex flex-col gap-10">
     <!-- Main Interactive 2FA Tool Card (Claymorphism) -->
     <section class="glass-card clay-card tool-card rounded-[32px]" aria-label="2FA Live Code Generator">
-      <!-- Mode Switcher Bar -->
-      <div class="tool-tabs flex gap-2 p-3.5 sm:px-6 border-b border-[var(--clay-divider)] overflow-x-auto" role="tablist" aria-label="Generator Modes">
-        <button type="button" class="tab-btn active inline-flex items-center gap-2 px-4 py-2.5 rounded-[16px] text-sm font-bold whitespace-nowrap cursor-pointer" role="tab" aria-selected="true" data-tab="single">
+      <!-- Mode Switcher Bar (Flowing Liquid Glass Pill) -->
+      <div class="tool-tabs relative flex gap-2 p-3.5 sm:px-6 border-b border-[var(--glass-border)] overflow-x-auto" role="tablist" aria-label="Generator Modes">
+        <span class="tab-liquid-pill" id="tabLiquidPill" aria-hidden="true"></span>
+        <button type="button" class="tab-btn active relative z-10 inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-bold whitespace-nowrap cursor-pointer" role="tab" aria-selected="true" data-tab="single">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
           <span>Live Generator</span>
         </button>
-        <button type="button" class="tab-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-[16px] text-sm font-bold whitespace-nowrap cursor-pointer" role="tab" aria-selected="false" data-tab="bulk">
+        <button type="button" class="tab-btn relative z-10 inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-bold whitespace-nowrap cursor-pointer" role="tab" aria-selected="false" data-tab="bulk">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
           <span>Multi / Bulk</span>
         </button>
-        <button type="button" class="tab-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-[16px] text-sm font-bold whitespace-nowrap cursor-pointer" role="tab" aria-selected="false" data-tab="qrgen">
+        <button type="button" class="tab-btn relative z-10 inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-bold whitespace-nowrap cursor-pointer" role="tab" aria-selected="false" data-tab="qrgen">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zm4 4h3v3h-3zm-4 3h2m3-7h2"/></svg>
           <span>QR Export</span>
         </button>
@@ -188,14 +204,16 @@
               </span>
             </div>
 
-            <!-- Natural Continuous Liquid Clay Progress Bar -->
+            <!-- Liquid Glass Merging Countdown Channel -->
             <div class="flex flex-col gap-2">
               <div class="led-bar clay-liquid-track relative h-5 p-[4px] rounded-full overflow-hidden" id="ledBar" aria-hidden="true">
                 <div class="clay-track-ticks" aria-hidden="true"></div>
-                <div class="clay-liquid-fill" id="liquidFill" style="width: 100%;">
-                  <span class="clay-liquid-wave"></span>
-                  <span class="clay-liquid-wave wave-2"></span>
-                  <span class="clay-liquid-sheen"></span>
+                <div class="liquid-goo-layer">
+                  <div class="clay-liquid-fill" id="liquidFill" style="width: 100%;">
+                    <span class="clay-liquid-wave"></span>
+                    <span class="clay-liquid-wave wave-2"></span>
+                    <span class="clay-liquid-sheen"></span>
+                  </div>
                 </div>
               </div>
               <div class="flex justify-between mono text-[10px] font-semibold tracking-wider text-[var(--text-muted)]" aria-hidden="true">

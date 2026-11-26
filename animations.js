@@ -12,6 +12,38 @@ let motionSpring = null;
 let lenisInstance = null;
 
 // Expose lightweight hooks for app.js (tab switches, dynamic cards, modals)
+export function moveLiquidTabPill(activeBtn, immediate = false) {
+  const pill = document.getElementById('tabLiquidPill');
+  if (!pill || !activeBtn) return;
+
+  const x = activeBtn.offsetLeft;
+  const width = activeBtn.offsetWidth;
+  const height = activeBtn.offsetHeight;
+  const top = activeBtn.offsetTop;
+
+  pill.style.top = `${top}px`;
+  pill.style.height = `${height}px`;
+
+  if (immediate || REDUCED_MOTION || !motionAnimate || !motionSpring) {
+    pill.style.opacity = '1';
+    pill.style.width = `${width}px`;
+    pill.style.transform = `translateX(${x}px)`;
+    return;
+  }
+
+  motionAnimate(
+    pill,
+    {
+      x,
+      width: `${width}px`,
+      opacity: 1,
+      scaleX: [1, 1.07, 1],
+      scaleY: [1, 0.94, 1],
+    },
+    { easing: motionSpring({ stiffness: 340, damping: 26, mass: 0.75 }) }
+  );
+}
+
 export function animatePanelIn(panelEl) {
   if (REDUCED_MOTION || !panelEl || !motionAnimate || !motionSpring) return;
   motionAnimate(

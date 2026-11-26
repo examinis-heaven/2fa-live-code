@@ -12,6 +12,7 @@ import {
 import { generateQRSvg, decodeQRFromSource } from './qr.js';
 import {
   initAnimations,
+  moveLiquidTabPill,
   animatePanelIn,
   animateDynamicCards,
   animateModalIn,
@@ -140,15 +141,26 @@ function initOfflineIndicator() {
 
 // --- Tabs ---
 function initTabs() {
-  document.querySelectorAll('.tab-btn').forEach((btn) => {
+  const buttons = document.querySelectorAll('.tab-btn');
+  const initialActive = document.querySelector('.tab-btn.active');
+  if (initialActive) {
+    requestAnimationFrame(() => moveLiquidTabPill(initialActive, true));
+  }
+  window.addEventListener('resize', () => {
+    const current = document.querySelector('.tab-btn.active');
+    if (current) moveLiquidTabPill(current, true);
+  });
+
+  buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const target = btn.dataset.tab;
       state.activeTab = target;
-      document.querySelectorAll('.tab-btn').forEach((b) => {
+      buttons.forEach((b) => {
         const isActive = b.dataset.tab === target;
         b.classList.toggle('active', isActive);
         b.setAttribute('aria-selected', String(isActive));
       });
+      moveLiquidTabPill(btn, false);
       document.querySelectorAll('.tab-panel').forEach((panel) => {
         const isActive = panel.id === `panel-${target}`;
         panel.classList.toggle('active', isActive);
